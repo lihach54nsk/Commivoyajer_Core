@@ -81,6 +81,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commivoyager.DyncamicProgramming\Commivoyager.DyncamicProgramming.csproj">
+      <Project>{b73ac429-7413-46b9-a6ee-4e78fc46e7e0}</Project>
+      <Name>Commivoyager.DyncamicProgramming</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Commivoyajer_Framework\Commivoyajer_Framework.csproj">
       <Project>{76fb0d53-3ddc-4809-bb14-1af00e017272}</Project>
       <Name>Commivoyajer_Framework</Name>

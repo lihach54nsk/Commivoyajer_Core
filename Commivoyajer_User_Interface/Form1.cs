@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
+using Commivoyager.DyncamicProgramming;
 using Commivoyajer_Core.Models;
 using Commivoyajer_Core.PreparationMethods;
 
@@ -79,6 +81,15 @@ namespace Commivoyajer_User_Interface
             }
 
             var input = _prepareData.PrepareData(coords);
+
+            var watch = new Stopwatch();
+            watch.Start();
+
+            var result = PathFinder.FindTheWay(input);
+
+            watch.Stop();
+
+            result.CalculationTime = watch.ElapsedMilliseconds;
         }
 
         private void greedyMethodButton_Click(object sender, EventArgs e)
