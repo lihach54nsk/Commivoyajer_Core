@@ -6,24 +6,24 @@ namespace Commivoyajer_Core.Methods
     {
         public Output GetBruteForceMethod(double[,] dis_matrix) // Сама функция перебора
         {
-            int[] city_array = new int[dis_matrix.GetLength(0)];
-            int[] answer_array = new int[dis_matrix.GetLength(0)];
-            double minimal_dist = 0;
-            double new_dist = 0;
+            int[] cityArray = new int[dis_matrix.GetLength(0)];
+            int[] answerArray = new int[dis_matrix.GetLength(0)];
+            double minimalDistance = 0;
+            double newDistance = 0;
 
             for (int i = 0; i < dis_matrix.GetLength(0); i++)
-                city_array[i] = i + 1;
+                cityArray[i] = i + 1;
 
-            answer_array = city_array;
-            minimal_dist = CalculateDistance(dis_matrix, city_array);
+            answerArray = cityArray;
+            minimalDistance = CalculateDistance(dis_matrix, cityArray);
 
-            while (permNxt(city_array, 0))
+            while (permNxt(cityArray, 0))
             {
-                new_dist = CalculateDistance(dis_matrix, city_array);
-                if (minimal_dist > new_dist)
+                newDistance = CalculateDistance(dis_matrix, cityArray);
+                if (minimalDistance > newDistance)
                 {
-                    minimal_dist = new_dist;
-                    answer_array = city_array;
+                    minimalDistance = newDistance;
+                    answerArray = cityArray;
                 }
             }
 
@@ -31,7 +31,7 @@ namespace Commivoyajer_Core.Methods
             // answer_array - is answer
             return new Output
             {
-                Sequence = answer_array,
+                Sequence = answerArray,
                 JourneyLength = 0,
                 CalculationTime = 0,
                 variantsCount = 0
