@@ -102,7 +102,7 @@ namespace Commivoyajer_User_Interface
 
             watch.Stop();
 
-            result.CalculationTime = watch.ElapsedMilliseconds;
+            result.CalculationTime = watch.ElapsedTicks;
 
             for (int i = 0; i < result.Sequence.Length; i++)
             {
