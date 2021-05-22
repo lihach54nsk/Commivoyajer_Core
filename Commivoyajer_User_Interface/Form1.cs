@@ -135,6 +135,8 @@ namespace Commivoyajer_User_Interface
                 var cityToAdd = coords.Find(x => x.Id == city);
                 chart.Series[1].Points.AddXY(cityToAdd.XCoord, cityToAdd.YCoord);
             }
+            var firstCity = coords.Find(x => x.Id == output.Sequence[0]);
+            chart.Series[1].Points.AddXY(firstCity.XCoord, firstCity.YCoord);
 
             calculationTimeTextBox.Text = output.CalculationTime.ToString();
             journeyLengthTextBox.Text = Math.Round(output.JourneyLength, 2).ToString();
