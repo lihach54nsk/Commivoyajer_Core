@@ -103,6 +103,12 @@ namespace Commivoyajer_User_Interface
             watch.Stop();
 
             result.CalculationTime = watch.ElapsedMilliseconds;
+
+            for (int i = 0; i < result.Sequence.Length; i++)
+            {
+                result.Sequence[i] = result.Sequence[i] + 1;
+            }
+
             ShowDataInUI(coords, result);
         }
 
