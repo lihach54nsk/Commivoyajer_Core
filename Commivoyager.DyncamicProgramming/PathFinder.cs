@@ -39,11 +39,7 @@ namespace Commivoyager.DyncamicProgramming
                 }
             }
 
-            var resultPathLength = temp[(1 << dotsCount) - 1, 0];
-
-            var backTrackLength = resultPathLength;
             var pathTrace = new int[dotsCount];
-            var pathMask = (1 << dotsCount) - 1;
             var currentPathMask = (1 << dotsCount) - 1;
             var currentCity = 0;
 
