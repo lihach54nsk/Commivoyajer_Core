@@ -29,6 +29,8 @@ namespace Commivoyajer_Core.PreparationMethods
             for (int i = 0; i < sequence.Length - 1; i++)
                 result += input[sequence[i] - 1, sequence[i + 1] - 1];
 
+            result += input[sequence[sequence.Length - 1] - 1, sequence[0] - 1];
+
             return result;
         }
 
