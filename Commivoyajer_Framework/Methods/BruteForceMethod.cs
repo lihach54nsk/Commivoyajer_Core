@@ -6,12 +6,12 @@ namespace Commivoyajer_Core.Methods
     {
         public Output GetBruteForceMethod(double[,] dis_matrix) // Сама функция перебора
         {
-            int[] city_array = new int[dis_matrix.GetLength(0) - 1];
-            int[] answer_array = new int[dis_matrix.GetLength(0) - 1];
+            int[] city_array = new int[dis_matrix.GetLength(0)];
+            int[] answer_array = new int[dis_matrix.GetLength(0)];
             double minimal_dist = 0;
             double new_dist = 0;
 
-            for (int i = 0; i < dis_matrix.GetLength(0) - 1; i++)
+            for (int i = 0; i < dis_matrix.GetLength(0); i++)
                 city_array[i] = i + 1;
 
             answer_array = city_array;
@@ -52,7 +52,7 @@ namespace Commivoyajer_Core.Methods
             int i = rt - 1;
             int j = rt;
 
-            while ((i >= a) && (ar[i] >= ar[i + 1]))
+            while ((i >= a) && (ar[i] >= ar[i]))
                 i--;
 
             if (i < a)
@@ -77,17 +77,17 @@ namespace Commivoyajer_Core.Methods
             double dist = 0;
             int i;
 
-            for (i = 0; i <= order.Length; i++)
+            for (i = 0; i < order.Length; i++)
             {
                 if (i == 0)
                 {
                     dist += dis_matrix[0, order[i]];
                 }
-                else if (i > 0 && i < order.Length)
+                else if (i > 0 && i < order.Length - 1)
                 {
                     dist += dis_matrix[order[i], order[i - 1]];
                 }
-                else if (i == order.Length)
+                else if (i == order.Length - 1)
                 {
                     dist += dis_matrix[order[i - 1], 0];
                 }
