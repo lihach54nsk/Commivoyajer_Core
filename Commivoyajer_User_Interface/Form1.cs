@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Forms
+using System.Windows.Forms;
 using Commivoyajer_Core.Methods;
 using Commivoyager.DyncamicProgramming;
 using Commivoyajer_Core.Models;
@@ -49,14 +49,7 @@ namespace Commivoyajer_User_Interface
             result.CalculationTime = time.ElapsedMilliseconds;
             result.JourneyLength = _prepareData.CalculateJourneylangth(input, result.Sequence);
 
-            foreach (var city in result.Sequence)
-            {
-                var cityToAdd = coords.Find(x => x.Id == city);
-                chart.Series[1].Points.AddXY(cityToAdd.XCoord, cityToAdd.YCoord);
-            }
-
-            calculationTimeTextBox.Text = result.CalculationTime.ToString();
-            journeyLengthTextBox.Text = Math.Round(result.JourneyLength, 2).ToString();
+            ShowDataInUI(coords, result);
         }
 
         private void branchAndBoundMethodButton_Click(object sender, EventArgs e)
@@ -110,6 +103,7 @@ namespace Commivoyajer_User_Interface
             watch.Stop();
 
             result.CalculationTime = watch.ElapsedMilliseconds;
+            ShowDataInUI(coords, result);
         }
 
         private void greedyMethodButton_Click(object sender, EventArgs e)
@@ -132,6 +126,18 @@ namespace Commivoyajer_User_Interface
             }
 
             var input = _prepareData.PrepareData(coords);
+        }
+
+        private void ShowDataInUI(List<Input> coords, Output output)
+        {
+            foreach (var city in output.Sequence)
+            {
+                var cityToAdd = coords.Find(x => x.Id == city);
+                chart.Series[1].Points.AddXY(cityToAdd.XCoord, cityToAdd.YCoord);
+            }
+
+            calculationTimeTextBox.Text = output.CalculationTime.ToString();
+            journeyLengthTextBox.Text = Math.Round(output.JourneyLength, 2).ToString();
         }
     }
 }

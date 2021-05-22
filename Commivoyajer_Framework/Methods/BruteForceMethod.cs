@@ -34,7 +34,7 @@ namespace Commivoyajer_Core.Methods
                 Sequence = answerArray,
                 JourneyLength = 0,
                 CalculationTime = 0,
-                variantsCount = 0
+                VariantsCount = 0
             };
         }
 
