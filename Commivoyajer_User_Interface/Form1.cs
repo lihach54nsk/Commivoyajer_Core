@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
+using Commivoyajer_Core.Methods;
 using Commivoyajer_Core.Models;
 using Commivoyajer_Core.PreparationMethods;
 
@@ -9,9 +11,11 @@ namespace Commivoyajer_User_Interface
     public partial class Form1 : Form
     {
         private readonly PrepareDataClass _prepareData;
+        private readonly BruteForceMethod _bruteForceMethod;
         public Form1()
         {
             _prepareData = new PrepareDataClass();
+            _bruteForceMethod = new BruteForceMethod();
             InitializeComponent();
         }
 
@@ -35,6 +39,23 @@ namespace Commivoyajer_User_Interface
             }
 
             var input = _prepareData.PrepareData(coords);
+
+            var time = new Stopwatch();
+            time.Start();
+            var result = _bruteForceMethod.GetBruteForceMethod(input);
+            time.Stop();
+
+            result.CalculationTime = time.ElapsedMilliseconds;
+            result.JourneyLength = _prepareData.CalculateJourneylangth(input, result.Sequence);
+
+            foreach (var city in result.Sequence)
+            {
+                var cityToAdd = coords.Find(x => x.Id == city);
+                chart.Series[1].Points.AddXY(cityToAdd.XCoord, cityToAdd.YCoord);
+            }
+
+            calculationTimeTextBox.Text = result.CalculationTime.ToString();
+            journeyLengthTextBox.Text = Math.Round(result.JourneyLength, 2).ToString();
         }
 
         private void branchAndBoundMethodButton_Click(object sender, EventArgs e)

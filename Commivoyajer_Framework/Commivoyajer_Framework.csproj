@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Methods\BroodForceMethod.cs" />
+    <Compile Include="Methods\BruteForceMethod.cs" />
     <Compile Include="Models\Input.cs" />
     <Compile Include="Models\Output.cs" />
     <Compile Include="PreparationMethods\PrepareDataClass.cs" />

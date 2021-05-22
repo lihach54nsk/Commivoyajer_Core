@@ -29,10 +29,10 @@ namespace Commivoyajer_User_Interface
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.inputDataGridView = new System.Windows.Forms.DataGridView();
             this.XCoord = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,28 +41,32 @@ namespace Commivoyajer_User_Interface
             this.branchAndBoundMethodButton = new System.Windows.Forms.Button();
             this.dynamicProgrammingMethodButton = new System.Windows.Forms.Button();
             this.greedyMethodButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.calculationTimeTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.journeyLengthTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // chart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart.Legends.Add(legend2);
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Legend = "Legend1";
-            series1.Name = "Cities";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Path";
-            this.chart.Series.Add(series1);
-            this.chart.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series3.Legend = "Legend1";
+            series3.Name = "Cities";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Path";
+            this.chart.Series.Add(series3);
+            this.chart.Series.Add(series4);
             this.chart.Size = new System.Drawing.Size(525, 353);
             this.chart.TabIndex = 0;
             this.chart.Text = "Chart";
@@ -128,11 +132,49 @@ namespace Commivoyajer_User_Interface
             this.greedyMethodButton.UseVisualStyleBackColor = true;
             this.greedyMethodButton.Click += new System.EventHandler(this.greedyMethodButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 377);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(126, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Время работы метода: ";
+            // 
+            // calculationTimeTextBox
+            // 
+            this.calculationTimeTextBox.Location = new System.Drawing.Point(144, 374);
+            this.calculationTimeTextBox.Name = "calculationTimeTextBox";
+            this.calculationTimeTextBox.ReadOnly = true;
+            this.calculationTimeTextBox.Size = new System.Drawing.Size(100, 20);
+            this.calculationTimeTextBox.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 405);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Длина пути: ";
+            // 
+            // journeyLengthTextBox
+            // 
+            this.journeyLengthTextBox.Location = new System.Drawing.Point(144, 402);
+            this.journeyLengthTextBox.Name = "journeyLengthTextBox";
+            this.journeyLengthTextBox.ReadOnly = true;
+            this.journeyLengthTextBox.Size = new System.Drawing.Size(100, 20);
+            this.journeyLengthTextBox.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.journeyLengthTextBox);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.calculationTimeTextBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.greedyMethodButton);
             this.Controls.Add(this.dynamicProgrammingMethodButton);
             this.Controls.Add(this.branchAndBoundMethodButton);
@@ -144,6 +186,7 @@ namespace Commivoyajer_User_Interface
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -157,6 +200,10 @@ namespace Commivoyajer_User_Interface
         private System.Windows.Forms.Button branchAndBoundMethodButton;
         private System.Windows.Forms.Button dynamicProgrammingMethodButton;
         private System.Windows.Forms.Button greedyMethodButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox calculationTimeTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox journeyLengthTextBox;
     }
 }
 
