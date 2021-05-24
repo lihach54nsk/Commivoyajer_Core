@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
+using Commivoyajer_Core.Methods;
+using Commivoyager.DyncamicProgramming;
 using Commivoyajer_Core.Models;
 using Commivoyajer_Core.PreparationMethods;
 
@@ -9,9 +12,11 @@ namespace Commivoyajer_User_Interface
     public partial class Form1 : Form
     {
         private readonly PrepareDataClass _prepareData;
+        private readonly BruteForceMethod _bruteForceMethod;
         public Form1()
         {
             _prepareData = new PrepareDataClass();
+            _bruteForceMethod = new BruteForceMethod();
             InitializeComponent();
         }
 
@@ -35,6 +40,16 @@ namespace Commivoyajer_User_Interface
             }
 
             var input = _prepareData.PrepareData(coords);
+
+            var time = new Stopwatch();
+            time.Start();
+            var result = _bruteForceMethod.GetBruteForceMethod(input);
+            time.Stop();
+
+            result.CalculationTime = time.ElapsedMilliseconds;
+            result.JourneyLength = _prepareData.CalculateJourneylangth(input, result.Sequence);
+
+            ShowDataInUI(coords, result);
         }
 
         private void branchAndBoundMethodButton_Click(object sender, EventArgs e)
@@ -79,6 +94,22 @@ namespace Commivoyajer_User_Interface
             }
 
             var input = _prepareData.PrepareData(coords);
+
+            var watch = new Stopwatch();
+            watch.Start();
+
+            var result = PathFinder.FindTheWay(input);
+
+            watch.Stop();
+
+            result.CalculationTime = watch.ElapsedMilliseconds;
+
+            for (int i = 0; i < result.Sequence.Length; i++)
+            {
+                result.Sequence[i] = result.Sequence[i] + 1;
+            }
+
+            ShowDataInUI(coords, result);
         }
 
         private void greedyMethodButton_Click(object sender, EventArgs e)
@@ -101,6 +132,20 @@ namespace Commivoyajer_User_Interface
             }
 
             var input = _prepareData.PrepareData(coords);
+        }
+
+        private void ShowDataInUI(List<Input> coords, Output output)
+        {
+            foreach (var city in output.Sequence)
+            {
+                var cityToAdd = coords.Find(x => x.Id == city);
+                chart.Series[1].Points.AddXY(cityToAdd.XCoord, cityToAdd.YCoord);
+            }
+            var firstCity = coords.Find(x => x.Id == output.Sequence[0]);
+            chart.Series[1].Points.AddXY(firstCity.XCoord, firstCity.YCoord);
+
+            calculationTimeTextBox.Text = output.CalculationTime.ToString();
+            journeyLengthTextBox.Text = Math.Round(output.JourneyLength, 2).ToString();
         }
     }
 }

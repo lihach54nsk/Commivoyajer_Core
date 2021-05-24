@@ -13,8 +13,23 @@ namespace Commivoyajer_Core.PreparationMethods
             for (int i = 0; i < input.Count; i++)
             {
                 for (int j = 0; j < input.Count; j++)
+                {
                     result[i, j] = GetRoadLength(input[i], input[j]);
+                }
+                   
             }
+
+            return result;
+        }
+
+        public double CalculateJourneylangth(double[,] input, int[] sequence)
+        {
+            double result = 0;
+
+            for (int i = 0; i < sequence.Length - 1; i++)
+                result += input[sequence[i] - 1, sequence[i + 1] - 1];
+
+            result += input[sequence[sequence.Length - 1] - 1, sequence[0] - 1];
 
             return result;
         }
