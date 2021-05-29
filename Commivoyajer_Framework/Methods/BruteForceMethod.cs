@@ -8,7 +8,7 @@ namespace Commivoyajer_Core.Methods
         {
             int[] cityArray = new int[dis_matrix.GetLength(0) - 1];
             int[] answerArray = new int[dis_matrix.GetLength(0) - 1];
-            int[] finalanswerArray = new int[dis_matrix.GetLength(0) + 1];
+            int[] finalAnswerArray = new int[dis_matrix.GetLength(0) + 1];
             double minimalDistance = 0;
             double newDistance = 0;
 
@@ -27,15 +27,15 @@ namespace Commivoyajer_Core.Methods
                     cityArray.CopyTo(answerArray, 0);
                 }
             }
-            finalanswerArray[0] = 1;
+            finalAnswerArray[0] = 1;
             for (int j = 1; j <= answerArray.Length; j++)
-                finalanswerArray[j] = answerArray[j - 1] + 1;
-            finalanswerArray[dis_matrix.GetLength(0)] = 1;
+                finalAnswerArray[j] = answerArray[j - 1] + 1;
+            finalAnswerArray[dis_matrix.GetLength(0)] = 1;
             
             // answer_array - is answer
             return new Output
             {
-                Sequence = finalanswerArray,
+                Sequence = finalAnswerArray,
                 JourneyLength = 0,
                 CalculationTime = 0,
                 VariantsCount = 0
