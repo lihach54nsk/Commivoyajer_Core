@@ -9,7 +9,6 @@ namespace Commivoyajer_Core.Methods
             int[] cityArray = new int[dis_matrix.GetLength(0) - 1];
             int[] answerArray = new int[dis_matrix.GetLength(0) - 1];
             int[] finalanswerArray = new int[dis_matrix.GetLength(0) + 1];
-            int uselesscounter_ = 0;
             double minimalDistance = 0;
             double newDistance = 0;
 
@@ -26,16 +25,13 @@ namespace Commivoyajer_Core.Methods
                 {
                     minimalDistance = newDistance;
                     cityArray.CopyTo(answerArray, 0);
-                    uselesscounter_++;
                 }
             }
-            uselesscounter_++;
             finalanswerArray[0] = 1;
             for (int j = 1; j <= answerArray.Length; j++)
                 finalanswerArray[j] = answerArray[j - 1] + 1;
             finalanswerArray[dis_matrix.GetLength(0)] = 1;
-
-            // Вывод пути и длины пути в текстбокс
+            
             // answer_array - is answer
             return new Output
             {
