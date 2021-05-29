@@ -6,15 +6,17 @@ namespace Commivoyajer_Core.Methods
     {
         public Output GetBruteForceMethod(double[,] dis_matrix) // Сама функция перебора
         {
-            int[] cityArray = new int[dis_matrix.GetLength(0)];
-            int[] answerArray = new int[dis_matrix.GetLength(0)];
+            int[] cityArray = new int[dis_matrix.GetLength(0) - 1];
+            int[] answerArray = new int[dis_matrix.GetLength(0) - 1];
+            int[] finalanswerArray = new int[dis_matrix.GetLength(0) + 1];
+            int uselesscounter_ = 0;
             double minimalDistance = 0;
             double newDistance = 0;
 
-            for (int i = 0; i < dis_matrix.GetLength(0); i++)
+            for (int i = 0; i < (dis_matrix.GetLength(0) - 1); i++)
                 cityArray[i] = i + 1;
 
-            answerArray = cityArray;
+            //answerArray = cityArray;
             minimalDistance = CalculateDistance(dis_matrix, cityArray);
 
             while (permNxt(cityArray, 0))
@@ -23,15 +25,21 @@ namespace Commivoyajer_Core.Methods
                 if (minimalDistance > newDistance)
                 {
                     minimalDistance = newDistance;
-                    answerArray = cityArray;
+                    cityArray.CopyTo(answerArray, 0);
+                    uselesscounter_++;
                 }
             }
+            uselesscounter_++;
+            finalanswerArray[0] = 1;
+            for (int j = 1; j <= answerArray.Length; j++)
+                finalanswerArray[j] = answerArray[j - 1] + 1;
+            finalanswerArray[dis_matrix.GetLength(0)] = 1;
 
             // Вывод пути и длины пути в текстбокс
             // answer_array - is answer
             return new Output
             {
-                Sequence = answerArray,
+                Sequence = finalanswerArray,
                 JourneyLength = 0,
                 CalculationTime = 0,
                 VariantsCount = 0
@@ -52,7 +60,7 @@ namespace Commivoyajer_Core.Methods
             int i = rt - 1;
             int j = rt;
 
-            while ((i >= a) && (ar[i] >= ar[i]))
+            while ((i >= a) && (ar[i] >= ar[i + 1]))
                 i--;
 
             if (i < a)
@@ -74,23 +82,13 @@ namespace Commivoyajer_Core.Methods
 
         private double CalculateDistance(double[,] dis_matrix, int[] order) // доп.функция вычисления длины пути по маршруту
         {
-            double dist = 0;
+            double dist = dis_matrix[0, order[0]] + dis_matrix[order[order.Length - 1], 0];
             int i;
 
-            for (i = 0; i < order.Length; i++)
+            for (i = 1; i < order.Length; i++)
             {
-                if (i == 0)
-                {
-                    dist += dis_matrix[0, order[i]];
-                }
-                else if (i > 0 && i < order.Length - 1)
-                {
-                    dist += dis_matrix[order[i], order[i - 1]];
-                }
-                else if (i == order.Length - 1)
-                {
-                    dist += dis_matrix[order[i - 1], 0];
-                }
+                dist = dist + dis_matrix[order[i - 1], order[i]];
+
             }
             return dist;
         }
