@@ -22,7 +22,7 @@ namespace Commivoyajer_Core.PreparationMethods
             return result;
         }
 
-        public double CalculateJourneylangth(double[,] input, int[] sequence)
+        public double CalculateJourneyLength(double[,] input, int[] sequence)
         {
             double result = 0;
 

@@ -6,6 +6,7 @@ using Commivoyajer_Core.Methods;
 using Commivoyager.DyncamicProgramming;
 using Commivoyajer_Core.Models;
 using Commivoyajer_Core.PreparationMethods;
+using Commivoyajer_Framework.Methods;
 
 namespace Commivoyajer_User_Interface
 {
@@ -13,10 +14,12 @@ namespace Commivoyajer_User_Interface
     {
         private readonly PrepareDataClass _prepareData;
         private readonly BruteForceMethod _bruteForceMethod;
+        private readonly GreedyMethod _greedyMethod;
         public Form1()
         {
             _prepareData = new PrepareDataClass();
             _bruteForceMethod = new BruteForceMethod();
+            _greedyMethod = new GreedyMethod();
             InitializeComponent();
         }
 
@@ -47,7 +50,7 @@ namespace Commivoyajer_User_Interface
             time.Stop();
 
             result.CalculationTime = time.ElapsedMilliseconds;
-            result.JourneyLength = _prepareData.CalculateJourneylangth(input, result.Sequence);
+            result.JourneyLength = _prepareData.CalculateJourneyLength(input, result.Sequence);
 
             ShowDataInUI(coords, result);
         }
@@ -132,6 +135,16 @@ namespace Commivoyajer_User_Interface
             }
 
             var input = _prepareData.PrepareData(coords);
+
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+            var result = _greedyMethod.GetGreedyMethod(input);
+            stopWatch.Stop();
+
+            result.CalculationTime = stopWatch.ElapsedMilliseconds;
+            result.JourneyLength = _prepareData.CalculateJourneyLength(input, result.Sequence);
+
+            ShowDataInUI(coords, result);
         }
 
         private void ShowDataInUI(List<Input> coords, Output output)
