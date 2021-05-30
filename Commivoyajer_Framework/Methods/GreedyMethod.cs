@@ -62,13 +62,7 @@ namespace Commivoyajer_Framework.Methods
                 if (currentCity != 0)
                     continue;
 
-                if (distance == -1.0 && row[i] != 0)
-                {
-                    distance = row[i];
-                    resultIndex = i;
-                }
-
-                if (distance > row[i])
+                if ((distance == -1 && row[i] != 0) || (distance > row[i]))
                 {
                     distance = row[i];
                     resultIndex = i;
