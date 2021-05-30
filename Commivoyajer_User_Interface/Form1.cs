@@ -149,9 +149,11 @@ namespace Commivoyajer_User_Interface
 
         private void ShowDataInUI(List<Input> coords, Output output)
         {
+            var sequenceString = "";
             foreach (var city in output.Sequence)
             {
                 var cityToAdd = coords.Find(x => x.Id == city);
+                sequenceString += city.ToString() + "-";
                 chart.Series[1].Points.AddXY(cityToAdd.XCoord, cityToAdd.YCoord);
             }
             var firstCity = coords.Find(x => x.Id == output.Sequence[0]);
@@ -159,6 +161,7 @@ namespace Commivoyajer_User_Interface
 
             calculationTimeTextBox.Text = output.CalculationTime.ToString();
             journeyLengthTextBox.Text = Math.Round(output.JourneyLength, 2).ToString();
+            sequenceTextBox.Text = sequenceString + output.Sequence[0].ToString();
         }
     }
 }

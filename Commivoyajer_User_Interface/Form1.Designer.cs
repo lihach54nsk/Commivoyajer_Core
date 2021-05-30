@@ -45,6 +45,8 @@ namespace Commivoyajer_User_Interface
             this.calculationTimeTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.journeyLengthTextBox = new System.Windows.Forms.TextBox();
+            this.sequenceTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -168,11 +170,30 @@ namespace Commivoyajer_User_Interface
             this.journeyLengthTextBox.Size = new System.Drawing.Size(100, 20);
             this.journeyLengthTextBox.TabIndex = 9;
             // 
+            // sequenceTextBox
+            // 
+            this.sequenceTextBox.Location = new System.Drawing.Point(144, 428);
+            this.sequenceTextBox.Name = "sequenceTextBox";
+            this.sequenceTextBox.ReadOnly = true;
+            this.sequenceTextBox.Size = new System.Drawing.Size(100, 20);
+            this.sequenceTextBox.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 431);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(121, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Последовательность: ";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 459);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.sequenceTextBox);
             this.Controls.Add(this.journeyLengthTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.calculationTimeTextBox);
@@ -206,6 +227,8 @@ namespace Commivoyajer_User_Interface
         private System.Windows.Forms.TextBox calculationTimeTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox journeyLengthTextBox;
+        private System.Windows.Forms.TextBox sequenceTextBox;
+        private System.Windows.Forms.Label label3;
     }
 }
 

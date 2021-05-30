@@ -13,9 +13,9 @@ namespace Commivoyajer_Framework.Methods
             for (int i = 0; i < input.GetLength(0); i++)
             {
                 var sequence = new int[input.GetLength(0)];
-                var cityIndex = i + 1;
+                var cityIndex = i;
                 var journeyLength = 0.0;
-                sequence[0] = cityIndex;
+                sequence[0] = cityIndex + 1;
 
                 for (int j = 1; j < input.GetLength(0); j++)
                 {
@@ -59,7 +59,7 @@ namespace Commivoyajer_Framework.Methods
             {
                 var currentCity = sequence.FirstOrDefault(x => x == i + 1);
 
-                if (currentCity == 0)
+                if (currentCity != 0)
                     continue;
 
                 if (distance == -1.0 && row[i] != 0)
@@ -81,11 +81,17 @@ namespace Commivoyajer_Framework.Methods
         private Output GetAnswer(List<Output> output)
         {
             var resultIndex = 0;
-            var resultLength = 0.0;
+            var resultLength = -1.0;
             var index = 0;
 
-            foreach(var variant in output)
+            foreach (var variant in output)
             {
+                if (resultLength == -1.0)
+                {
+                    resultIndex = index;
+                    resultLength = variant.JourneyLength;
+                }
+
                 if (resultLength > variant.JourneyLength)
                 {
                     resultIndex = index;
