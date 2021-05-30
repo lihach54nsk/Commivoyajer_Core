@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Methods\BruteForceMethod.cs" />
+    <Compile Include="Methods\GreedyMethod.cs" />
     <Compile Include="Models\Input.cs" />
     <Compile Include="Models\Output.cs" />
     <Compile Include="PreparationMethods\PrepareDataClass.cs" />
