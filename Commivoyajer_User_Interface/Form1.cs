@@ -15,11 +15,13 @@ namespace Commivoyajer_User_Interface
         private readonly PrepareDataClass _prepareData;
         private readonly BruteForceMethod _bruteForceMethod;
         private readonly GreedyMethod _greedyMethod;
+        private readonly BranchAndBoundMethod _branchAndBoundMethod;
         public Form1()
         {
             _prepareData = new PrepareDataClass();
             _bruteForceMethod = new BruteForceMethod();
             _greedyMethod = new GreedyMethod();
+            _branchAndBoundMethod = new BranchAndBoundMethod();
             InitializeComponent();
         }
 
@@ -75,6 +77,14 @@ namespace Commivoyajer_User_Interface
             }
 
             var input = _prepareData.PrepareData(coords);
+            var watch = new Stopwatch();
+            watch.Start();
+            var result = _branchAndBoundMethod.Branch_and_bound(input);
+            watch.Stop();
+
+            result.CalculationTime = watch.ElapsedMilliseconds;
+
+            ShowDataInUI(coords, result);
         }
 
         private void dynamicProgrammingMethodButton_Click(object sender, EventArgs e)
