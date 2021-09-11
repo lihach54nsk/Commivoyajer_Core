@@ -22,33 +22,23 @@
             BorderThickness="1px"
             BorderBrush="Gray"
             Margin="2px">
-            <Canvas  Height="auto">
-                <Ellipse
-                    Stroke="Blue"
-                    Fill="Blue"
-                    Canvas.Top="50"
-                    Width="10"
-                    Height="10"/>
-                <Ellipse
-                    Stroke="Blue"
-                    Fill="Blue"
-                    Canvas.Top="50"
-                    Canvas.Left="60"
-                    Width="10"
-                    Height="10"/>
-                <Ellipse
-                    Stroke="Blue"
-                    Fill="Blue"
-                    Canvas.Top="30"
-                    Canvas.Left="30"
-                    Width="10"
-                    Height="10"/>
+            <Canvas x:Name="dotsCanvas" Height="auto" MouseDown="dotsCanvas_MouseDown" Background="White">
             </Canvas>
         </Border>
-        <DataGrid Grid.Row="0" Grid.Column="1" Margin="2px" Grid.RowSpan="2">
-            
+        <DataGrid Grid.Row="0" Grid.Column="1" Margin="2px" Grid.RowSpan="2"
+                  ItemsSource="{Binding Dots}">
         </DataGrid>
-        <TabControl Grid.Row="1" Grid.Column="0" Margin="2px">
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="2"/>
+                </Style>
+            </StackPanel.Resources>
+            
+            <Button x:Name="ClearButton" Click="ClearButton_Click">Очистить</Button>
+            <Button>Выполнить</Button>
+        </StackPanel>
+        <TabControl Grid.Row="1" Grid.Column="0" Margin="2px" Grid.RowSpan="2">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">

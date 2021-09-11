@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComivoyagerNext.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,41 @@ namespace ComivoyagerNext
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainPageViewModel viewModel = new MainPageViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = viewModel;
+        }
+
+        private void dotsCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Canvas canvas)
+            {
+                var circle = new Ellipse()
+                {
+                    Stroke = Brushes.Blue,
+                    Fill = Brushes.Blue,
+                    Width = 10,
+                    Height = 10,
+                };
+
+                var position = e.GetPosition(canvas);
+
+                canvas.Children.Add(circle);
+                Canvas.SetTop(circle, position.Y);
+                Canvas.SetLeft(circle, position.X);
+
+                viewModel.AddDot(position.X, position.Y);
+            }
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            dotsCanvas.Children.Clear();
+            viewModel.ClearDots();
         }
     }
 }
