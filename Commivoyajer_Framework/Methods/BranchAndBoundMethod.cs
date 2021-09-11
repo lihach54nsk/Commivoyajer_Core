@@ -6,7 +6,6 @@ namespace Commivoyajer_Framework.Methods
 {
     public partial class BranchAndBoundMethod 
     {
-
         //int[] result_sequence;
         List<int> result_mas_sequence;
         double result_time = 0;
