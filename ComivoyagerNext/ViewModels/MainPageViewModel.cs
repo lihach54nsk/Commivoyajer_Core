@@ -13,8 +13,6 @@ namespace ComivoyagerNext.ViewModels
 {
     class MainPageViewModel : INotifyPropertyChanged
     {
-       
-
         public enum SimulationMode { Random, Genetic }
 
         public delegate void PathChangedEvent(object sender, PathEventInfo e);
@@ -26,10 +24,10 @@ namespace ComivoyagerNext.ViewModels
 
         static int seed = Environment.TickCount;
 
-        static readonly ThreadLocal<Random> random =
-            new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
+        static readonly Random random = new Random();
 
         private readonly Dispatcher mainWindowDispatcher;
+        private readonly object lockUI = new();
 
         private double executionTime;
         private double wayLength;
@@ -110,52 +108,76 @@ namespace ComivoyagerNext.ViewModels
 
             Monitor.Exit(Dots);
 
-            var tempList = new List<DotModel>(dots.Length);
-            var nextPath = new List<DotModel>(dots.Length);
             var minPathLength = double.PositiveInfinity;
 
-            var knownPaths = new double[dots.Length, dots.Length];
+            var tasks = new Task[Environment.ProcessorCount];
 
-            for (int i = 0; i < knownPaths.GetLength(0); i++)
+            for (int i = 0; i < tasks.Length; i++)
             {
-                for (int j = 0; j < knownPaths.GetLength(1); j++)
+                var localRandom = new Random(random.Next());
+
+                tasks[i] = Task.Run(async () =>
                 {
-                    knownPaths[i, j] = double.NegativeInfinity;
-                }
+                    var tempList = new List<DotModel>(dots.Length);
+                    var nextPath = new List<DotModel>(dots.Length);
+                    var knownPaths = new double[dots.Length, dots.Length];
+
+                    for (int i = 0; i < knownPaths.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < knownPaths.GetLength(1); j++)
+                        {
+                            knownPaths[i, j] = double.NegativeInfinity;
+                        }
+                    }
+
+                    while (true)
+                    {
+                        tempList.Clear();
+                        nextPath.Clear();
+
+                        tempList.AddRange(dots);
+
+                        while (tempList.Count > 0)
+                        {
+                            var position = localRandom.Next(0, tempList.Count);
+
+                            var value = tempList[position];
+
+                            nextPath.Add(value);
+
+                            tempList.RemoveAt(position);
+                        }
+
+                        var currentPathLength = PathEstimate(nextPath, knownPaths, minPathLength);
+
+                        if (currentPathLength < minPathLength)
+                        {
+
+                            double localMinPathLength;
+                            bool updateUi = true;
+
+                            do
+                            {
+                                localMinPathLength = minPathLength;
+
+                                if (currentPathLength >= localMinPathLength)
+                                {
+                                    updateUi = false;
+                                    break;
+                                }
+                            }
+                            while (localMinPathLength != Interlocked.CompareExchange(ref minPathLength, currentPathLength, localMinPathLength));
+
+                            if(updateUi)
+                            {
+                                await UpdatePathAsync(0.0, PathLength(nextPath), nextPath);
+                            }
+                        }
+                    }
+                });
             }
 
-            await Task.Run(async () =>
-            {
-                while (true)
-                {
-                    tempList.Clear();
-                    nextPath.Clear();
-
-                    tempList.AddRange(dots);
-
-                    while (tempList.Count > 0)
-                    {
-                        var position = random.Value.Next(0, tempList.Count);
-
-                        var value = tempList[position];
-
-                        nextPath.Add(value);
-
-                        tempList.RemoveAt(position);
-                    }
-
-                    var currentPathLength = PathEstimate(nextPath, knownPaths);
-
-                    if (currentPathLength < minPathLength)
-                    {
-                        minPathLength = currentPathLength;
-
-                        await Task.Delay(1000);
-
-                        await UpdatePathAsync(0.0, PathLength(nextPath), nextPath);
-                    }
-                }
-            });
+            await Task.WhenAll(tasks);
         }
 
         private void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -169,18 +191,21 @@ namespace ComivoyagerNext.ViewModels
             {
                 var sb = new StringBuilder();
 
-                OnPathChanged?.Invoke(this, new PathEventInfo { Path = dots.ToArray() });
-
-                ExecutionTime = executionTime;
-
-                WayLength = wayLength;
-
                 foreach (var item in dots)
                 {
                     sb.Append(item.Number.ToString()).Append(" -> ");
                 }
 
-                Sequence = sb.ToString();
+                lock (lockUI)
+                {
+                    OnPathChanged?.Invoke(this, new PathEventInfo { Path = dots.ToArray() });
+
+                    ExecutionTime = executionTime;
+
+                    WayLength = wayLength;
+
+                    Sequence = sb.ToString();
+                }
             });
         }
 
@@ -217,7 +242,7 @@ namespace ComivoyagerNext.ViewModels
             return sum;
         }
 
-        private double PathEstimate(IEnumerable<DotModel> dots, double[,] knownPaths)
+        private double PathEstimate(IEnumerable<DotModel> dots, double[,] knownPaths, double bestValue)
         {
             DotModel? firstDot = null;
             DotModel? lastDot = null;
@@ -240,6 +265,11 @@ namespace ComivoyagerNext.ViewModels
                     var distance = knownPaths[lastDot.Number, item.Number];
 
                     sumEstimate += distance;
+
+                    if(sumEstimate > bestValue)
+                    {
+                        return double.PositiveInfinity;
+                    }
                 } else
                 {
                     firstDot = item;
