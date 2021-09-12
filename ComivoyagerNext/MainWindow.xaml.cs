@@ -86,7 +86,11 @@ namespace ComivoyagerNext
 
         private async void RunButton_Click(object sender, RoutedEventArgs e)
         {
+            RunButton.IsEnabled = false;
+
             await viewModel.SimulateAsync();
+
+            RunButton.IsEnabled = true;
         }
 
         private void RandomSelectionTab_GotFocus(object sender, RoutedEventArgs e)

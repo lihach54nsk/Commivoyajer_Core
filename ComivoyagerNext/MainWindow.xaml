@@ -64,24 +64,8 @@
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0">Parameter 1</TextBlock>
-                                <TextBox Grid.Row="0" Grid.Column="1"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0">Parameter 2</TextBlock>
-                                <TextBox Grid.Row="0" Grid.Column="1"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0">Parameter 3</TextBlock>
-                                <TextBox Grid.Row="0" Grid.Column="1"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0">Итераций на поток</TextBlock>
+                                <TextBox Grid.Row="0" Grid.Column="1" DataContext="{Binding RandomSelectionViewModel}" Text="{Binding ItherationsCount}"/>
                             </Grid>
                         </StackPanel>
                     </TabItem.Content>

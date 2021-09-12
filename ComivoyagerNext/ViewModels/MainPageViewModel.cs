@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -32,6 +33,8 @@ namespace ComivoyagerNext.ViewModels
         private double executionTime;
         private double wayLength;
         private string sequence = "";
+
+        public RandomSelectionViewModel RandomSelectionViewModel { get; } = new();
 
         public ObservableCollection<DotModel> Dots { get; } = new();
 
@@ -88,16 +91,24 @@ namespace ComivoyagerNext.ViewModels
 
         public async Task SimulateAsync()
         {
+            var sw = new Stopwatch();
+            sw.Start();
             switch (Mode)
             {
                 case SimulationMode.Random:
                     await SimulateRandom();
-                    return;
+                    break;
                 case SimulationMode.Genetic:
                     break;
                 default:
                     break;
             }
+            sw.Stop();
+
+            await mainWindowDispatcher.InvokeAsync(() =>
+            {
+                ExecutionTime = sw.ElapsedMilliseconds;
+            });
         }
 
         public async Task SimulateRandom()
@@ -121,6 +132,7 @@ namespace ComivoyagerNext.ViewModels
                     var tempList = new List<DotModel>(dots.Length);
                     var nextPath = new List<DotModel>(dots.Length);
                     var knownPaths = new double[dots.Length, dots.Length];
+                    var itherations = RandomSelectionViewModel.ItherationsCount;
 
                     for (int i = 0; i < knownPaths.GetLength(0); i++)
                     {
@@ -130,7 +142,7 @@ namespace ComivoyagerNext.ViewModels
                         }
                     }
 
-                    while (true)
+                    for (int i = 0; i < itherations; i++)
                     {
                         tempList.Clear();
                         nextPath.Clear();
@@ -170,7 +182,7 @@ namespace ComivoyagerNext.ViewModels
 
                             if(updateUi)
                             {
-                                await UpdatePathAsync(0.0, PathLength(nextPath), nextPath);
+                                await UpdatePathAsync(PathLength(nextPath), nextPath);
                             }
                         }
                     }
@@ -185,7 +197,7 @@ namespace ComivoyagerNext.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        private async Task UpdatePathAsync(double executionTime, double wayLength, IEnumerable<DotModel> dots)
+        private async Task UpdatePathAsync(double wayLength, IEnumerable<DotModel> dots)
         {
             await mainWindowDispatcher.InvokeAsync(() =>
             {
@@ -199,8 +211,6 @@ namespace ComivoyagerNext.ViewModels
                 lock (lockUI)
                 {
                     OnPathChanged?.Invoke(this, new PathEventInfo { Path = dots.ToArray() });
-
-                    ExecutionTime = executionTime;
 
                     WayLength = wayLength;
 
