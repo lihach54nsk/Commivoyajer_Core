@@ -84,18 +84,18 @@ namespace ComivoyagerNext.ViewModels
             Dots.Clear();
         }
 
-        public Task SimulateAsync()
+        public async Task SimulateAsync()
         {
             switch (Mode)
             {
                 case SimulationMode.Random:
-                    return SimulateRandom();
+                    await SimulateRandom();
+                    return;
                 case SimulationMode.Genetic:
                     break;
                 default:
                     break;
             }
-            return Task.CompletedTask;
         }
 
         public async Task SimulateRandom()
@@ -110,37 +110,48 @@ namespace ComivoyagerNext.ViewModels
             var nextPath = new List<DotModel>(dots.Length);
             var minPathLength = double.PositiveInfinity;
 
-            while (true)
+            var knownPaths = new double[dots.Length, dots.Length];
+
+            for (int i = 0; i < knownPaths.GetLength(0); i++)
             {
-                tempList.Clear();
-                nextPath.Clear();
-
-                tempList.AddRange(dots);
-
-                while(tempList.Count > 0)
+                for (int j = 0; j < knownPaths.GetLength(1); j++)
                 {
-                    var position = random.Next(0, tempList.Count);
-
-                    var value = tempList[position];
-
-                    nextPath.Add(value);
-
-                    tempList.RemoveAt(position);
-                }
-
-                var currentPathLength = PathLength(nextPath);
-
-                if(currentPathLength < minPathLength)
-                {
-                    minPathLength = currentPathLength;
-
-                    await Task.Delay(1000);
-
-                    await UpdatePathAsync(0.0, minPathLength, nextPath);
+                    knownPaths[i, j] = double.NegativeInfinity;
                 }
             }
 
-           
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    tempList.Clear();
+                    nextPath.Clear();
+
+                    tempList.AddRange(dots);
+
+                    while (tempList.Count > 0)
+                    {
+                        var position = random.Next(0, tempList.Count);
+
+                        var value = tempList[position];
+
+                        nextPath.Add(value);
+
+                        tempList.RemoveAt(position);
+                    }
+
+                    var currentPathLength = PathEstimate(nextPath, knownPaths);
+
+                    if (currentPathLength < minPathLength)
+                    {
+                        minPathLength = currentPathLength;
+
+                        await Task.Delay(1000);
+
+                        await UpdatePathAsync(0.0, minPathLength, nextPath);
+                    }
+                }
+            });
         }
 
         private void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -190,6 +201,54 @@ namespace ComivoyagerNext.ViewModels
             }
 
             return sum;
+        }
+
+        private double PathEstimate(IEnumerable<DotModel> dots, double[,] knownPaths)
+        {
+            DotModel? firstDot = null;
+            DotModel? lastDot = null;
+
+            double sumEstimate = 0.0;
+
+            foreach (var item in dots)
+            {
+                if (lastDot != null)
+                {
+                    if(knownPaths[lastDot.Number, item.Number] < 0)
+                    {
+                        var xOffset = lastDot.X - item.X;
+                        var yOffset = lastDot.Y - item.Y;
+
+                        knownPaths[lastDot.Number, item.Number] = xOffset * xOffset + yOffset * yOffset;
+                        knownPaths[item.Number, lastDot.Number] = knownPaths[lastDot.Number, item.Number];
+                    }
+
+                    var distance = knownPaths[lastDot.Number, item.Number];
+
+                    sumEstimate += distance;
+                } else
+                {
+                    firstDot = item;
+                }
+
+                lastDot = item;
+            }
+
+            if(firstDot != null && lastDot != null)
+            {
+                if (knownPaths[lastDot.Number, firstDot.Number] < 0)
+                {
+                    var xOffset = lastDot.X - firstDot.X;
+                    var yOffset = lastDot.Y - firstDot.Y;
+
+                    knownPaths[lastDot.Number, firstDot.Number] = xOffset * xOffset + yOffset * yOffset;
+                    knownPaths[firstDot.Number, lastDot.Number] = knownPaths[lastDot.Number, firstDot.Number];
+                }
+
+                sumEstimate += knownPaths[firstDot.Number, lastDot.Number];
+            }
+
+            return sumEstimate;
         }
     }
 }
