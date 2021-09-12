@@ -21,13 +21,36 @@ namespace ComivoyagerNext
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly MainPageViewModel viewModel = new();
+        private Polyline? pathLine;
+
+        private readonly MainPageViewModel viewModel = new();
 
         public MainWindow()
         {
             InitializeComponent();
 
             DataContext = viewModel;
+
+            viewModel.OnPathChanged += ViewModel_OnPathChanged;
+        }
+
+        private void ViewModel_OnPathChanged(object sender, MainPageViewModel.PathEventInfo e)
+        {
+            if (pathLine != null)
+            {
+                dotsCanvas.Children.Remove(pathLine);
+            }
+
+            var line = new Polyline
+            {
+                Points = new PointCollection(e.Path.Select(x => new Point(x.X, x.Y))),
+                Stroke = Brushes.Green,
+                StrokeThickness = 2,
+            };
+
+            pathLine = line;
+
+            dotsCanvas.Children.Add(line);
         }
 
         private void dotsCanvas_MouseDown(object sender, MouseButtonEventArgs e)
