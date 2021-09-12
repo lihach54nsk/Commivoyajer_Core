@@ -24,8 +24,12 @@ namespace ComivoyagerNext.ViewModels
             public DotModel[] Path { get; init; }
         };
 
+        static int seed = Environment.TickCount;
+
+        static readonly ThreadLocal<Random> random =
+            new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
+
         private readonly Dispatcher mainWindowDispatcher;
-        private readonly Random random = new();
 
         private double executionTime;
         private double wayLength;
@@ -131,7 +135,7 @@ namespace ComivoyagerNext.ViewModels
 
                     while (tempList.Count > 0)
                     {
-                        var position = random.Next(0, tempList.Count);
+                        var position = random.Value.Next(0, tempList.Count);
 
                         var value = tempList[position];
 
@@ -148,7 +152,7 @@ namespace ComivoyagerNext.ViewModels
 
                         await Task.Delay(1000);
 
-                        await UpdatePathAsync(0.0, minPathLength, nextPath);
+                        await UpdatePathAsync(0.0, PathLength(nextPath), nextPath);
                     }
                 }
             });
@@ -182,6 +186,7 @@ namespace ComivoyagerNext.ViewModels
 
         private double PathLength(IEnumerable<DotModel> dots)
         {
+            DotModel? firstDot = null;
             DotModel? lastDot = null;
 
             double sum = 0.0;
@@ -198,6 +203,15 @@ namespace ComivoyagerNext.ViewModels
                 }
 
                 lastDot = item;
+            }
+
+            if (firstDot != null && lastDot != null)
+            {
+                var xOffset = lastDot.X - firstDot.X;
+                var yOffset = lastDot.Y - firstDot.Y;
+                var distance = Math.Sqrt(xOffset * xOffset + yOffset * yOffset);
+
+                sum += distance;
             }
 
             return sum;
