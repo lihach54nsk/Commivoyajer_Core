@@ -21,7 +21,7 @@ namespace ComivoyagerNext
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainPageViewModel viewModel = new MainPageViewModel();
+        readonly MainPageViewModel viewModel = new();
 
         public MainWindow()
         {
