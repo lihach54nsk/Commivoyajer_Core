@@ -23,15 +23,18 @@ namespace ComivoyagerNext
     {
         private Polyline? pathLine;
 
-        private readonly MainPageViewModel viewModel = new();
+        private readonly MainPageViewModel viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            viewModel = new(Dispatcher);
+
             DataContext = viewModel;
 
             viewModel.OnPathChanged += ViewModel_OnPathChanged;
+            viewModel.Mode = MainPageViewModel.SimulationMode.Random;
         }
 
         private void ViewModel_OnPathChanged(object sender, MainPageViewModel.PathEventInfo e)
@@ -79,6 +82,16 @@ namespace ComivoyagerNext
         {
             dotsCanvas.Children.Clear();
             viewModel.ClearDots();
+        }
+
+        private async void RunButton_Click(object sender, RoutedEventArgs e)
+        {
+            await viewModel.SimulateAsync();
+        }
+
+        private void RandomSelectionTab_GotFocus(object sender, RoutedEventArgs e)
+        {
+            viewModel.Mode = MainPageViewModel.SimulationMode.Random;
         }
     }
 }

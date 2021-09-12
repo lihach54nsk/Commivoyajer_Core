@@ -49,8 +49,8 @@
                 </Style>
 
             </StackPanel.Resources>
-            <TabControl Grid.Column="1" Margin="3px" Grid.RowSpan="2">
-                <TabItem>
+            <TabControl x:Name="SimulationParamsTabs" Grid.Column="1" Margin="3px" Grid.RowSpan="2">
+                <TabItem x:Name="RandomSelectionTab" GotFocus="RandomSelectionTab_GotFocus">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Ellipse Height="10" Width="10" Fill="Black" />
@@ -118,17 +118,17 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold">Результаты:</TextBlock>
                 
                 <TextBlock Grid.Row="1" Grid.Column="0">Время работы</TextBlock>
-                <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ExecutionTime}" IsReadOnly="True"></TextBox>
 
                 <TextBlock Grid.Row="2" Grid.Column="0">Длина пути</TextBlock>
-                <TextBox Grid.Row="2" Grid.Column="1"></TextBox>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WayLength}" IsReadOnly="True"></TextBox>
 
                 <TextBlock Grid.Row="3" Grid.Column="0">Последовательность</TextBlock>
-                <TextBox Grid.Row="3" Grid.Column="1" TextWrapping="Wrap"></TextBox>
+                <TextBox Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Sequence}" IsReadOnly="True"></TextBox>
             </Grid>
             <Separator/>
             <Button x:Name="ClearButton" Click="ClearButton_Click">Очистить точки</Button>
-            <Button>Выполнить</Button>
+            <Button x:Name="RunButton" Click="RunButton_Click">Выполнить</Button>
         </StackPanel>
         
     </Grid>
