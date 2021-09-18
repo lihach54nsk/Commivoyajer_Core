@@ -60,10 +60,20 @@ namespace ComivoyagerNext.Methods
                 {
                     var prohability = GetTransitionProbability(candidateEnergy - currentEnergy, temperature);
 
+                    if(prohability < 0.8)
+                    {
+                        Console.WriteLine(true);
+                    }
+
                     if (IsTransistion(prohability))
                     {
                         currentEnergy = candidateEnergy;
                         candidateOrder.CopyTo(currentOrder);
+                        Console.WriteLine("Transition");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Not transition");
                     }
                 }
 
@@ -110,17 +120,12 @@ namespace ComivoyagerNext.Methods
 
         private void UpdateCandidate(Span<int> array)
         {
-            var length = array.Length;
-
-            var i = random.Next(length);
-            var j = random.Next(length);
-
-            if(i > j)
+            for (int i = 0; i < array.Length; i++)
             {
-                (i, j) = (j, i);
-            }
+                var j = random.Next(i, array.Length);
 
-            array[i .. j].Reverse();
+                (array[i], array[j]) = (array[j], array[i]);
+            }
         }
     }
 }
