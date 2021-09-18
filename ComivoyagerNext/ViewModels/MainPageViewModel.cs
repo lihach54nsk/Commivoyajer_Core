@@ -130,6 +130,15 @@ namespace ComivoyagerNext.ViewModels
             OnPathChanged?.Invoke(this, new PathEventInfo { Path = path.Select(x => dotsSnapshot[x]).ToArray() });
 
             WayLength = length;
+
+            var sequenceStringBuilder = new StringBuilder();
+
+            foreach (var item in path)
+            {
+                sequenceStringBuilder.Append($"{item} -> ");
+            }
+
+            Sequence = sequenceStringBuilder.ToString();
         }
 
 
@@ -146,6 +155,15 @@ namespace ComivoyagerNext.ViewModels
             OnPathChanged?.Invoke(this, new PathEventInfo { Path = path.Select(x => dotsSnapshot[x]).ToArray() });
 
             WayLength = length;
+
+            var sequenceStringBuilder = new StringBuilder();
+
+            foreach (var item in path)
+            {
+                sequenceStringBuilder.Append($"{item} -> ");
+            }
+
+            Sequence = sequenceStringBuilder.ToString();
         }
 
         public async Task SimulateRandom()
