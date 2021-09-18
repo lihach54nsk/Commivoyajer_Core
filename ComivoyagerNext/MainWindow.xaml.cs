@@ -97,5 +97,10 @@ namespace ComivoyagerNext
         {
             viewModel.Mode = MainPageViewModel.SimulationMode.Random;
         }
+
+        private void BurnoutTab_GotFocus(object sender, RoutedEventArgs e)
+        {
+            viewModel.Mode = MainPageViewModel.SimulationMode.Burnout;
+        }
     }
 }

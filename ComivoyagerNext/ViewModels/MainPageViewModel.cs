@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComivoyagerNext.Methods;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,7 +15,7 @@ namespace ComivoyagerNext.ViewModels
 {
     class MainPageViewModel : INotifyPropertyChanged
     {
-        public enum SimulationMode { Random, Genetic }
+        public enum SimulationMode { Random, Genetic, Burnout }
 
         public delegate void PathChangedEvent(object sender, PathEventInfo e);
 
@@ -35,6 +36,8 @@ namespace ComivoyagerNext.ViewModels
         private string sequence = "";
 
         public RandomSelectionViewModel RandomSelectionViewModel { get; } = new();
+
+        public BurnoutViewModel BurnoutViewModel { get; } = new();
 
         public ObservableCollection<DotModel> Dots { get; } = new();
 
@@ -100,6 +103,9 @@ namespace ComivoyagerNext.ViewModels
                     break;
                 case SimulationMode.Genetic:
                     break;
+                case SimulationMode.Burnout:
+                    await SimulateBurnoutAsync();
+                    break;
                 default:
                     break;
             }
@@ -111,13 +117,24 @@ namespace ComivoyagerNext.ViewModels
             });
         }
 
+        public async Task SimulateBurnoutAsync()
+        {
+            var dotsSnapshot = Dots.ToArray();
+
+            var cities = Dots.Select(x => new Point { X = x.X, Y = x.Y }).ToArray();
+
+            var solver = new BurnoutSolver(BurnoutViewModel.ItherationsCount, BurnoutViewModel.InitialTemperature);
+
+            var (path, length) = await Task.Run(() => solver.FoldCitiesOrder(cities));
+
+            OnPathChanged?.Invoke(this, new PathEventInfo { Path = path.Select(x => dotsSnapshot[x]).ToArray() });
+
+            WayLength = length;
+        }
+
         public async Task SimulateRandom()
         {
-            Monitor.Enter(Dots);
-
             var dots = Dots.ToArray();
-
-            Monitor.Exit(Dots);
 
             var minPathLength = double.PositiveInfinity;
 

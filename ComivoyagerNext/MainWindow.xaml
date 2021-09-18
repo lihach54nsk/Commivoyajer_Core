@@ -70,6 +70,32 @@
                         </StackPanel>
                     </TabItem.Content>
                 </TabItem>
+                <TabItem x:Name="BurnoutTab" GotFocus="BurnoutTab_GotFocus">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Height="10" Width="10" Fill="Black" />
+                            <TextBlock Margin="3">Имитация отжига</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <Grid DataContext="{Binding Path=BurnoutViewModel}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="0">Начальная температура</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="0" Text="{Binding InitialTemperature}"></TextBox>
+
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1">Количество итераций</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="1" Text="{Binding ItherationsCount}"></TextBox>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
@@ -78,11 +104,48 @@
                         </StackPanel>
                     </TabItem.Header>
                     <TabItem.Content>
-                        <StackPanel>
-                            <RadioButton IsChecked="True">iPhone S6</RadioButton>
-                            <RadioButton>LG G 4</RadioButton>
-                            <RadioButton>Lumia 550</RadioButton>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="0">Начальная температура</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="0"></TextBox>
+
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1">Количество итераций</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="1"></TextBox>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Height="10" Width="10" Fill="Black" />
+                            <TextBlock Margin="3">Колония муравьёв</TextBlock>
                         </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="0">Начальная температура</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="0"></TextBox>
+
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1">Количество итераций</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="1"></TextBox>
+                        </Grid>
                     </TabItem.Content>
                 </TabItem>
             </TabControl>
