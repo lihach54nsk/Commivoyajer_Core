@@ -99,7 +99,7 @@ namespace ComivoyagerNext.ViewModels
             switch (Mode)
             {
                 case SimulationMode.Random:
-                    await SimulateRandom();
+                    await SimulateRandomAsync();
                     break;
                 case SimulationMode.Genetic:
                     break;
@@ -124,6 +124,22 @@ namespace ComivoyagerNext.ViewModels
             var cities = Dots.Select(x => new Point { X = x.X, Y = x.Y }).ToArray();
 
             var solver = new BurnoutSolver(BurnoutViewModel.ItherationsCount, BurnoutViewModel.InitialTemperature);
+
+            var (path, length) = await Task.Run(() => solver.FoldCitiesOrder(cities));
+
+            OnPathChanged?.Invoke(this, new PathEventInfo { Path = path.Select(x => dotsSnapshot[x]).ToArray() });
+
+            WayLength = length;
+        }
+
+
+        public async Task SimulateRandomAsync()
+        {
+            var dotsSnapshot = Dots.ToArray();
+
+            var cities = Dots.Select(x => new Point { X = x.X, Y = x.Y }).ToArray();
+
+            var solver = new RandomSelectionSolver(RandomSelectionViewModel.ItherationsCount);
 
             var (path, length) = await Task.Run(() => solver.FoldCitiesOrder(cities));
 

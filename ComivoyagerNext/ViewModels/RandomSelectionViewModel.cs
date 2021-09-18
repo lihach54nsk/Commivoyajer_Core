@@ -8,6 +8,6 @@ namespace ComivoyagerNext.ViewModels
 {
     class RandomSelectionViewModel
     {
-        public double ItherationsCount { get; set; }
+        public int ItherationsCount { get; set; }
     }
 }
