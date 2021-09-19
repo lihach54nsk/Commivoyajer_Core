@@ -24,9 +24,9 @@ namespace ComivoyagerNext.Methods
             this.initialTemperature = initialTemperature;
         }
 
-        public (int[] path, double energy) FoldCitiesOrder(Span<Point> cities)
+        public (int[] path, double energy) FoldCitiesOrder(ReadOnlySpan<Point> cities)
         {
-            Span<int> currentBestOrder = stackalloc int[cities.Length];
+            Span<int> currentBestOrder = new int[cities.Length];
 
             for (int i = 0; i < currentBestOrder.Length; i++)
             {
@@ -35,19 +35,19 @@ namespace ComivoyagerNext.Methods
 
             var currentBestEnergy = Energy(cities, currentBestOrder);
 
-            Span<int> currentOrder = stackalloc int[cities.Length];
+            Span<int> currentOrder = new int[cities.Length];
             currentBestOrder.CopyTo(currentBestOrder);
 
             var currentEnergy = currentBestEnergy;
 
-            Span<int> candidateOrder = stackalloc int[cities.Length];
+            Span<int> candidateOrder = new int[cities.Length];
             currentBestOrder.CopyTo(candidateOrder);
 
             for (int i = 0; i < itherationsCount; i++)
             {
                 UpdateCandidate(candidateOrder);
 
-                var temperature = CurrentTemperature(i);
+                var temperature = GetTemperature(i);
 
                 var candidateEnergy = Energy(cities, candidateOrder);
 
@@ -60,20 +60,10 @@ namespace ComivoyagerNext.Methods
                 {
                     var prohability = GetTransitionProbability(candidateEnergy - currentEnergy, temperature);
 
-                    if(prohability < 0.8)
-                    {
-                        Console.WriteLine(true);
-                    }
-
                     if (IsTransistion(prohability))
                     {
                         currentEnergy = candidateEnergy;
                         candidateOrder.CopyTo(currentOrder);
-                        Console.WriteLine("Transition");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Not transition");
                     }
                 }
 
@@ -87,33 +77,26 @@ namespace ComivoyagerNext.Methods
             return (currentBestOrder.ToArray(), currentEnergy);
         }
 
-        private double CurrentTemperature(int index) => initialTemperature - initialTemperature * index / itherationsCount;
+        private double GetTemperature(int index) => initialTemperature * 0.1 / (index + 1);
 
         private static double GetTransitionProbability(double deltaEnergy, double temperature) => Exp(-deltaEnergy / temperature);
 
         private bool IsTransistion(double prohability) => random.NextDouble() <= prohability;
 
-        private double Energy(Span<Point> points, Span<int> indices)
+        private double Energy(ReadOnlySpan<Point> points, ReadOnlySpan<int> indices)
         {
             var sum = 0.0;
-            for (int i = 0; i < indices.Length - 1; i++)
+            
+            for (int i = 0; i < indices.Length; i++)
             {
-                var start = points[indices[i]];
-                var end = points[indices[i + 1]];
+                var start = points[indices[i % indices.Length]];
+                var end = points[indices[(i + 1) % indices.Length]];
 
                 var diffX = end.X - start.X;
                 var diffY = end.Y - start.Y;
 
                 sum += Sqrt(diffX * diffX + diffY * diffY);
             }
-
-            var borderStart = points[indices[^1]];
-            var borderEnd = points[indices[0]];
-
-            var diffXBorder = borderEnd.X - borderStart.X;
-            var diffYBorder = borderEnd.Y - borderStart.Y;
-
-            sum += Sqrt(diffXBorder * diffXBorder + diffYBorder * diffYBorder);
 
             return sum;
         }
