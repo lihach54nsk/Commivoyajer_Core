@@ -45,11 +45,22 @@ namespace ComivoyagerNext.Methods
             this.pheromoneProductionIntesity = pheromoneProductionIntesity;
         }
 
-        public (int[] path, double energy) FoldCitiesOrder(ReadOnlySpan<Point> cities)
+        public (int[] path, double pathLength) FoldCitiesOrder(ReadOnlySpan<Point> cities)
         {
+            var bestPath = new int[cities.Length];
+            var bestPathLength = double.PositiveInfinity;
+
             var partialPaths = Helpers.BuildPartialPaths(cities);
 
             var antPaths = new int[antsCount, cities.Length];
+
+            for (int i = 0; i < antPaths.GetLength(0); i++)
+            {
+                for (int j = 0; j < antPaths.GetLength(1); j++)
+                {
+                    antPaths[i, j] = j;
+                }
+            }
 
             var pheromoneMap = new double[cities.Length, cities.Length];
 
@@ -64,9 +75,10 @@ namespace ComivoyagerNext.Methods
             for (int i = 0; i < itherationsCount; i++)
             {
                 UpdateCandidate(pheromoneMap, partialPaths, antPaths);
+                UpdateBestPath(partialPaths, antPaths, bestPath, ref bestPathLength);
             }
 
-            throw new NotImplementedException();
+            return (bestPath, bestPathLength);
         }
 
         private void UpdateCandidate(double[,] pheromoneMap, double[,] partialPaths, int[,] antPaths)
@@ -86,7 +98,10 @@ namespace ComivoyagerNext.Methods
 
                     for (int k = i; k < antPaths.GetLength(1); k++)
                     {
-                        basis += Math.Pow(pheromoneMap[antPaths[j, k - 1], j], alpha) * Math.Pow(partialPaths[antPaths[j, k - 1], j], beta);
+                        var partialStart = antPaths[j, k - 1];
+                        var partialEnd = antPaths[j, k];
+
+                        basis += Math.Pow(pheromoneMap[partialStart, partialEnd], alpha) * Math.Pow(partialPaths[partialStart, partialEnd], beta);
                     }
 
                     var probability = 0.0;
@@ -94,7 +109,10 @@ namespace ComivoyagerNext.Methods
 
                     for (int k = i; k < antPaths.GetLength(1); k++)
                     {
-                        probability += Math.Pow(pheromoneMap[antPaths[j, k - 1], j], alpha) * Math.Pow(partialPaths[antPaths[j, k - 1], j], beta) / basis;
+                        var partialStart = antPaths[j, k - 1];
+                        var partialEnd = antPaths[j, k];
+
+                        probability += Math.Pow(pheromoneMap[partialStart, partialEnd], alpha) * Math.Pow(partialPaths[partialStart, partialEnd], beta) / basis;
 
                         selectedIndex = k;
 
@@ -117,12 +135,33 @@ namespace ComivoyagerNext.Methods
                         {
                             if(antPaths[i1, i - 1] == j && antPaths[i1, i] == k)
                             {
-                                // Maybe wrong
                                 spawnedPheromone += pheromoneProductionIntesity / partialPaths[j, k];
                             }
                         }
 
                         pheromoneMap[j, k] = (1.0 - evaporationRate) * pheromoneMap[j, k] + spawnedPheromone;
+                    }
+                }
+            }
+        }
+
+        private void UpdateBestPath(double[,] partialPaths, int[,] antsPaths, Span<int> bestPath, ref double bestPathLength)
+        {
+            for (int i = 0; i < antsPaths.GetLength(0); i++)
+            {
+                var currentLength = 0.0;
+
+                for (int j = 1; j < antsPaths.GetLength(1) + 1; j++)
+                {
+                    currentLength += partialPaths[antsPaths[i, (j - 1) % antsPaths.GetLength(1)], antsPaths[i, j % antsPaths.GetLength(1)]];
+                }
+
+                if(currentLength < bestPathLength)
+                {
+                    for (int j = 0; j < antsPaths.GetLength(1); j++)
+                    {
+                        bestPath[j] = antsPaths[i, j];
+                        bestPathLength = currentLength;
                     }
                 }
             }

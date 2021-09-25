@@ -8,17 +8,16 @@ namespace ComivoyagerNext.ViewModels
 {
     internal class AntsViewModel
     {
-        public int ItherationsCount { get; set; }
+        public int ItherationsCount { get; set; } = 100;
 
-        public int AntsCount { get; set; }
+        public int AntsCount { get; set; } = 5;
 
-        public double Alpha { get; set; }
+        public double Alpha { get; set; } = 0.5;
 
-        public double Beta { get; set; }
+        public double Beta { get; set; } = 0.5;
 
-        public double EvaporationRate { get; set; }
+        public double EvaporationRate { get; set; } = 100.0;
 
-        public double PheromoneProductionIntesity { get; set; }
-
+        public double PheromoneProductionIntesity { get; set; } = 100.0;
     }
 }

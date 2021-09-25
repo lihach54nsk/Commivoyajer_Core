@@ -108,6 +108,9 @@ namespace ComivoyagerNext.ViewModels
                 case SimulationMode.Burnout:
                     await SimulateBurnoutAsync();
                     break;
+                case SimulationMode.Ants:
+                    await SimulateAntsAsync();
+                    break;
                 default:
                     break;
             }
@@ -117,6 +120,36 @@ namespace ComivoyagerNext.ViewModels
             {
                 ExecutionTime = sw.ElapsedMilliseconds;
             });
+        }
+
+        public async Task SimulateAntsAsync()
+        {
+            var dotsSnapshot = Dots.ToArray();
+
+            var cities = Dots.Select(x => new Point { X = x.X, Y = x.Y }).ToArray();
+
+            var solver = new AntsSolver(
+                AntsViewModel.ItherationsCount,
+                AntsViewModel.AntsCount,
+                AntsViewModel.Alpha,
+                AntsViewModel.Beta,
+                AntsViewModel.EvaporationRate,
+                AntsViewModel.PheromoneProductionIntesity);
+
+            var (path, length) = await Task.Run(() => solver.FoldCitiesOrder(cities));
+
+            OnPathChanged?.Invoke(this, new PathEventInfo { Path = path.Select(x => dotsSnapshot[x]).ToArray() });
+
+            WayLength = length;
+
+            var sequenceStringBuilder = new StringBuilder();
+
+            foreach (var item in path)
+            {
+                sequenceStringBuilder.Append($"{item} -> ");
+            }
+
+            Sequence = sequenceStringBuilder.ToString();
         }
 
         public async Task SimulateBurnoutAsync()
