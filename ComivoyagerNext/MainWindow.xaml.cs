@@ -102,5 +102,10 @@ namespace ComivoyagerNext
         {
             viewModel.Mode = MainPageViewModel.SimulationMode.Burnout;
         }
+
+        private void AntsTab_GotFocus(object sender, RoutedEventArgs e)
+        {
+            viewModel.Mode = MainPageViewModel.SimulationMode.Ants;
+        }
     }
 }

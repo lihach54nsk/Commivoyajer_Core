@@ -15,7 +15,7 @@ namespace ComivoyagerNext.ViewModels
 {
     class MainPageViewModel : INotifyPropertyChanged
     {
-        public enum SimulationMode { Random, Genetic, Burnout }
+        public enum SimulationMode { Random, Genetic, Burnout, Ants }
 
         public delegate void PathChangedEvent(object sender, PathEventInfo e);
 
@@ -38,6 +38,8 @@ namespace ComivoyagerNext.ViewModels
         public RandomSelectionViewModel RandomSelectionViewModel { get; } = new();
 
         public BurnoutViewModel BurnoutViewModel { get; } = new();
+
+        public AntsViewModel AntsViewModel { get; } = new();
 
         public ObservableCollection<DotModel> Dots { get; } = new();
 
