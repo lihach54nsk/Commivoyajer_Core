@@ -20,7 +20,12 @@ namespace ComivoyagerNext.Methods
 
         private readonly double mutataionPropability;
 
-        public GeneticAlgorithmSolver(int generationSize, int generationsCount, int candidateGenerationSize, int vipGenCount, double mutataionPropability)
+        public GeneticAlgorithmSolver(
+            int generationSize,
+            int generationsCount,
+            int candidateGenerationSize,
+            int vipGenCount,
+            double mutataionPropability)
         {
             random = new Random();
 
@@ -39,29 +44,45 @@ namespace ComivoyagerNext.Methods
 
             var currentGenerationLengths = new double[currentGeneration.Length];
 
+            UpdateLengths(currentGeneration, partialPathLengths, currentGenerationLengths);
+
+            Array.Sort(currentGenerationLengths, currentGeneration);
+
             var candidateGeneration = new int[candidateGenerationSize][];
+
+            for (int i = 0; i < candidateGeneration.Length; i++)
+            {
+                candidateGeneration[i] = new int[cities.Length];
+            }
+
+            var candidateGenerationLengths = new double[candidateGeneration.Length];
 
             for (int i = 0; i < generationsCount; i++)
             {
-                UpdateLengths(currentGeneration, partialPathLengths, currentGenerationLengths);
-
-                Array.Sort(currentGenerationLengths, currentGeneration);
-
                 FillVipGens(currentGeneration, candidateGeneration);
 
                 Crossover(currentGeneration, candidateGeneration);
 
                 Mutate(candidateGeneration);
+
+                UpdateLengths(candidateGeneration, partialPathLengths, candidateGenerationLengths);
+
+                Array.Sort(candidateGenerationLengths, candidateGeneration);
+
+                Selection(candidateGeneration, candidateGenerationLengths, currentGeneration, currentGenerationLengths);
             }
 
-            throw new NotImplementedException();
+            return (currentGeneration[0], currentGenerationLengths[0]);
         }
 
         public int[][] CreateDefaultGeneration(int length)
         {
             var result = new int[generationSize][];
 
-            Array.Fill(result, new int[length]);
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = new int[length];
+            }
 
             Span<int> candidatePath = stackalloc int[length];
 
@@ -104,7 +125,7 @@ namespace ComivoyagerNext.Methods
         {
             for (int i = 0; i < vipGenCount; i++)
             {
-                currentGeneration[i].CopyTo(candidateGeneration[i], candidateGeneration[i].Length);
+                currentGeneration[i].AsSpan().CopyTo(candidateGeneration[i]);
             }
         }
 
@@ -118,12 +139,12 @@ namespace ComivoyagerNext.Methods
                 var parent1 = currentGeneration[random.Next(currentGeneration.Length)];
                 var parent2 = currentGeneration[random.Next(currentGeneration.Length)];
 
-                parent1.CopyTo(candidate, candidate.Length);
+                parent1.AsSpan().CopyTo(candidate);
 
                 var cutGenPosition1 = random.Next(candidate.Length);
                 var cutGenPosition2 = random.Next(candidate.Length + 1);
 
-                if(cutGenPosition1 > cutGenPosition2)
+                if (cutGenPosition1 > cutGenPosition2)
                 {
                     (cutGenPosition1, cutGenPosition2) = (cutGenPosition2, cutGenPosition1);
                 }
@@ -147,7 +168,7 @@ namespace ComivoyagerNext.Methods
         {
             foreach (var candidate in candidateGeneration)
             {
-                if(random.NextDouble() < mutataionPropability)
+                if (random.NextDouble() < mutataionPropability)
                 {
                     var swap1 = random.Next(candidate.Length);
                     var swap2 = random.Next(candidate.Length);
@@ -155,6 +176,20 @@ namespace ComivoyagerNext.Methods
                     (candidate[swap1], candidate[swap2]) = (candidate[swap2], candidate[swap1]);
                 }
             }
+        }
+
+        private void Selection(
+            int[][] candidatePaths,
+            double[] candidatePathsLengths,
+            int[][] currentPaths,
+            double[] currentPathsLengths)
+        {
+            for (int i = 0; i < currentPaths.Length; i++)
+            {
+                candidatePaths[i].AsSpan().CopyTo(currentPaths[i]);
+            }
+
+            candidatePathsLengths.AsSpan()[..currentPathsLengths.Length].CopyTo(currentPathsLengths);
         }
     }
 }

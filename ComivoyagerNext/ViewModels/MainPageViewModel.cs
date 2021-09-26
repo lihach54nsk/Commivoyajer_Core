@@ -41,6 +41,8 @@ namespace ComivoyagerNext.ViewModels
 
         public AntsViewModel AntsViewModel { get; } = new();
 
+        public GeneticAlgorithmViewModel GeneticAlgorithmViewModel { get; } = new();
+
         public ObservableCollection<DotModel> Dots { get; } = new();
 
         public event PathChangedEvent? OnPathChanged;
@@ -104,6 +106,7 @@ namespace ComivoyagerNext.ViewModels
                     await SimulateRandomAsync();
                     break;
                 case SimulationMode.Genetic:
+                    await SimulateGeneticAsync();
                     break;
                 case SimulationMode.Burnout:
                     await SimulateBurnoutAsync();
@@ -120,6 +123,35 @@ namespace ComivoyagerNext.ViewModels
             {
                 ExecutionTime = sw.ElapsedMilliseconds;
             });
+        }
+
+        public async Task SimulateGeneticAsync()
+        {
+            var dotsSnapshot = Dots.ToArray();
+
+            var cities = Dots.Select(x => new Point { X = x.X, Y = x.Y }).ToArray();
+
+            var solver = new GeneticAlgorithmSolver(
+                GeneticAlgorithmViewModel.GenerationSize,
+                GeneticAlgorithmViewModel.GenerationsCount,
+                GeneticAlgorithmViewModel.CandidateGenerationSize,
+                GeneticAlgorithmViewModel.VipGenCount,
+                GeneticAlgorithmViewModel.MutataionPropability);
+
+            var (path, length) = await Task.Run(() => solver.FoldCitiesOrder(cities));
+
+            OnPathChanged?.Invoke(this, new PathEventInfo { Path = path.Select(x => dotsSnapshot[x]).ToArray() });
+
+            WayLength = length;
+
+            var sequenceStringBuilder = new StringBuilder();
+
+            foreach (var item in path)
+            {
+                sequenceStringBuilder.Append($"{item} -> ");
+            }
+
+            Sequence = sequenceStringBuilder.ToString();
         }
 
         public async Task SimulateAntsAsync()

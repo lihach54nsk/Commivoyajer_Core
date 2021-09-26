@@ -96,7 +96,7 @@
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="GeneticAlgorythmTab" GotFocus="GeneticAlgorythmTab_GotFocus">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Ellipse Height="10" Width="10" Fill="Black" />
@@ -104,7 +104,7 @@
                         </StackPanel>
                     </TabItem.Header>
                     <TabItem.Content>
-                        <Grid>
+                        <Grid DataContext="{Binding GeneticAlgorithmViewModel}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="1*"/>
@@ -112,13 +112,25 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="0">Начальная температура</TextBlock>
-                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="0"></TextBox>
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="0">Размер поколения</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="0" Text="{Binding GenerationSize}"></TextBox>
 
-                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1">Количество итераций</TextBlock>
-                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="1"></TextBox>
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1">Количество поколений</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="1" Text="{Binding GenerationsCount}"></TextBox>
+
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="2">Поколение-кандидат</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="2" Text="{Binding CandidateGenerationSize}"></TextBox>
+
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="3">Количество VIP генов</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="3" Text="{Binding VipGenCount}"></TextBox>
+
+                            <TextBlock DockPanel.Dock="Left" Grid.Column="0" Grid.Row="4">Вероятность мутации</TextBlock>
+                            <TextBox DockPanel.Dock="Right" Grid.Column="1" Grid.Row="4" Text="{Binding MutataionPropability}"></TextBox>
                         </Grid>
                     </TabItem.Content>
                 </TabItem>

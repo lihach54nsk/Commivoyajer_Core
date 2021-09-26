@@ -107,5 +107,10 @@ namespace ComivoyagerNext
         {
             viewModel.Mode = MainPageViewModel.SimulationMode.Ants;
         }
+
+        private void GeneticAlgorythmTab_GotFocus(object sender, RoutedEventArgs e)
+        {
+            viewModel.Mode = MainPageViewModel.SimulationMode.Genetic;
+        }
     }
 }
