@@ -36,7 +36,7 @@ namespace ComivoyagerNext.Methods
             var currentBestEnergy = Energy(cities, currentBestOrder);
 
             Span<int> currentOrder = new int[cities.Length];
-            currentBestOrder.CopyTo(currentBestOrder);
+            currentBestOrder.CopyTo(currentOrder);
 
             var currentEnergy = currentBestEnergy;
 
@@ -45,11 +45,13 @@ namespace ComivoyagerNext.Methods
 
             for (int i = 0; i < itherationsCount; i++)
             {
+                currentOrder.CopyTo(candidateOrder);
+
                 UpdateCandidate(candidateOrder);
 
-                var temperature = GetTemperature(i);
-
                 var candidateEnergy = Energy(cities, candidateOrder);
+
+                var temperature = GetTemperature(i);
 
                 if(candidateEnergy < currentEnergy)
                 {
@@ -103,12 +105,15 @@ namespace ComivoyagerNext.Methods
 
         private void UpdateCandidate(Span<int> array)
         {
-            for (int i = 0; i < array.Length; i++)
-            {
-                var j = random.Next(i, array.Length);
+            var start = random.Next(array.Length);
+            var end = random.Next(array.Length + 1);
 
-                (array[i], array[j]) = (array[j], array[i]);
+            if(start > end)
+            {
+                (start, end) = (end, start);
             }
+
+            array[start..end].Reverse();
         }
     }
 }

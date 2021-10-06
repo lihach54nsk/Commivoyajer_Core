@@ -112,9 +112,9 @@ namespace ComivoyagerNext.Methods
             {
                 var sumLength = 0.0;
 
-                for (int j = 1; j < paths[i].Length; j++)
+                for (int j = 1; j < paths[i].Length + 1; j++)
                 {
-                    sumLength += partialPaths[paths[i][j - 1], paths[i][j]];
+                    sumLength += partialPaths[paths[i][(j - 1) % paths[i].Length], paths[i][j % paths[i].Length]];
                 }
 
                 lengths[i] = sumLength;

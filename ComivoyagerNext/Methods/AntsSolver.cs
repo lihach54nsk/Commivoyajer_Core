@@ -30,12 +30,9 @@ namespace ComivoyagerNext.Methods
             double evaporationRate,
             double pheromoneProductionIntesity)
         {
-            if (alpha + beta != 1.0)
-            {
-                throw new ArgumentException("alpha + beta should be equal 1");
-            }
+            random = new Random();
 
-            this.random = new Random();
+            NormalizeCoefficients(ref alpha, ref beta);
 
             this.itherationsCount = itherationsCount;
             this.antsCount = antsCount;
@@ -47,18 +44,20 @@ namespace ComivoyagerNext.Methods
 
         public (int[] path, double pathLength) FoldCitiesOrder(ReadOnlySpan<Point> cities)
         {
+            var partialPaths = Helpers.BuildPartialPaths(cities);
+
             var bestPath = new int[cities.Length];
             var bestPathLength = double.PositiveInfinity;
 
-            var partialPaths = Helpers.BuildPartialPaths(cities);
+            var antPaths = new int[antsCount][];
 
-            var antPaths = new int[antsCount, cities.Length];
-
-            for (int i = 0; i < antPaths.GetLength(0); i++)
+            for (int i = 0; i < antPaths.Length; i++)
             {
-                for (int j = 0; j < antPaths.GetLength(1); j++)
+                antPaths[i] = new int[cities.Length];
+
+                for (int j = 0; j < antPaths[i].Length; j++)
                 {
-                    antPaths[i, j] = j;
+                    antPaths[i][j] = j;
                 }
             }
 
@@ -81,36 +80,41 @@ namespace ComivoyagerNext.Methods
             return (bestPath, bestPathLength);
         }
 
-        private void UpdateCandidate(double[,] pheromoneMap, double[,] partialPaths, int[,] antPaths)
+        private void UpdateCandidate(double[,] pheromoneMap, double[,] partialPaths, int[][] antPaths)
         {
-            for (int i = 0; i < antPaths.GetLength(0); i++)
+            for (int i = 0; i < antPaths.Length; i++)
             {
-                antPaths[i, 0] = 0;
+                var path = antPaths[i];
+                var startIndex = random.Next(antPaths[i].Length);
+
+                (path[startIndex], path[0]) = (path[0], path[startIndex]);
             }
 
-            for (int i = 1; i < antPaths.GetLength(1); i++)
+            for (int i = 1; i < antPaths[0].Length; i++)
             {
-                for (int j = 0; j < antPaths.GetLength(0); j++)
+                for (int j = 0; j < antPaths.Length; j++)
                 {
-                    var coin = random.NextDouble();
+                    var path = antPaths[j];
 
                     var basis = 0.0;
 
-                    for (int k = i; k < antPaths.GetLength(1); k++)
+                    for (int k = i; k < path.Length; k++)
                     {
-                        var partialStart = antPaths[j, k - 1];
-                        var partialEnd = antPaths[j, k];
+                        var partialStart = path[i - 1];
+                        var partialEnd = path[k];
 
                         basis += Math.Pow(pheromoneMap[partialStart, partialEnd], alpha) * Math.Pow(partialPaths[partialStart, partialEnd], beta);
                     }
 
+                    var coin = random.NextDouble();
+
                     var probability = 0.0;
                     var selectedIndex = 0;
 
-                    for (int k = i; k < antPaths.GetLength(1); k++)
+                    for (int k = i; k < antPaths[j].Length; k++)
                     {
-                        var partialStart = antPaths[j, k - 1];
-                        var partialEnd = antPaths[j, k];
+                        var partialStart = path[i - 1];
+                        var partialEnd = path[k];
 
                         probability += Math.Pow(pheromoneMap[partialStart, partialEnd], alpha) * Math.Pow(partialPaths[partialStart, partialEnd], beta) / basis;
 
@@ -122,49 +126,54 @@ namespace ComivoyagerNext.Methods
                         }
                     }
 
-                    (antPaths[j, i], antPaths[j, selectedIndex]) = (antPaths[j, selectedIndex], antPaths[j, i]);
+                    (path[i], path[selectedIndex]) = (path[selectedIndex], path[i]);
                 }
 
                 for (int j = 0; j < pheromoneMap.GetLength(0); j++)
                 {
-                    for (int k = 0; k < pheromoneMap.GetLength(0); k++)
+                    for (int k = 0; k < pheromoneMap.GetLength(1); k++)
                     {
-                        var spawnedPheromone = 0.0;
-
-                        for (int i1 = 0; i1 < antPaths.GetLength(0); i1++)
-                        {
-                            if(antPaths[i1, i - 1] == j && antPaths[i1, i] == k)
-                            {
-                                spawnedPheromone += pheromoneProductionIntesity / partialPaths[j, k];
-                            }
-                        }
-
-                        pheromoneMap[j, k] = (1.0 - evaporationRate) * pheromoneMap[j, k] + spawnedPheromone;
+                        pheromoneMap[j, k] = (1.0 - evaporationRate) * pheromoneMap[j, k];
                     }
+                }
+
+                for (int j = 0; j < antPaths.Length; j++)
+                {
+                    var start = antPaths[j][i - 1];
+                    var end = antPaths[j][i];
+
+                    pheromoneMap[start, end] += pheromoneProductionIntesity / partialPaths[start, end];
                 }
             }
         }
 
-        private void UpdateBestPath(double[,] partialPaths, int[,] antsPaths, Span<int> bestPath, ref double bestPathLength)
+        private void UpdateBestPath(double[,] partialPaths, int[][] antsPaths, Span<int> bestPath, ref double bestPathLength)
         {
             for (int i = 0; i < antsPaths.GetLength(0); i++)
             {
+                var path = antsPaths[i];
+
                 var currentLength = 0.0;
 
-                for (int j = 1; j < antsPaths.GetLength(1) + 1; j++)
+                for (int j = 1; j < path.Length + 1; j++)
                 {
-                    currentLength += partialPaths[antsPaths[i, (j - 1) % antsPaths.GetLength(1)], antsPaths[i, j % antsPaths.GetLength(1)]];
+                    currentLength += partialPaths[path[(j - 1) % path.Length], path[j % path.Length]];
                 }
 
                 if(currentLength < bestPathLength)
                 {
-                    for (int j = 0; j < antsPaths.GetLength(1); j++)
-                    {
-                        bestPath[j] = antsPaths[i, j];
-                        bestPathLength = currentLength;
-                    }
+                    path.AsSpan().CopyTo(bestPath);
+                    bestPathLength = currentLength;
                 }
             }
+        }
+
+        private static void NormalizeCoefficients(ref double alpha, ref double beta)
+        {
+            var baseValue = alpha + beta;
+
+            alpha = alpha / baseValue;
+            beta = beta / baseValue;
         }
     }
 }
