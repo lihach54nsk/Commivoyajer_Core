@@ -111,7 +111,7 @@ namespace Commivoyajer_User_Interface
             var watch = new Stopwatch();
             watch.Start();
 
-            var result = PathFinder.FindTheWay(input);
+            var result = DyncamicProgrammingSolver.FindTheWay(input);
 
             watch.Stop();
 

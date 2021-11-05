@@ -2,9 +2,13 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Comivoyager.StrictMethods\Comivoyager.StrictMethods.csproj" />
+  </ItemGroup>
 
 </Project>

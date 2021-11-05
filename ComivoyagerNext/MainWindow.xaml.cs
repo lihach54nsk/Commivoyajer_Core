@@ -112,5 +112,10 @@ namespace ComivoyagerNext
         {
             viewModel.Mode = MainPageViewModel.SimulationMode.Genetic;
         }
+
+        private void StrictMethodsTab_GotFocus(object sender, RoutedEventArgs e)
+        {
+            viewModel.Mode = MainPageViewModel.SimulationMode.Strict;
+        }
     }
 }

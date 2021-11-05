@@ -38,6 +38,9 @@
                 <Style TargetType="{x:Type TextBox}">
                     <Setter Property="Margin" Value="2"/>
                 </Style>
+                <Style TargetType="{x:Type ComboBox}">
+                    <Setter Property="Margin" Value="2"/>
+                </Style>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Margin" Value="2"/>
                 </Style>
@@ -173,6 +176,33 @@
 
                             <TextBlock Grid.Column="0" Grid.Row="5">Феромон</TextBlock>
                             <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding PheromoneProductionIntesity}"></TextBox>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem x:Name="StrictMethodsTab" GotFocus="StrictMethodsTab_GotFocus">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Height="10" Width="10" Fill="Black" />
+                            <TextBlock Margin="3">Точные методы</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <Grid DataContext="{Binding StrictMethodsViewModel}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Column="0" Grid.Row="0">Метод</TextBlock>
+                            <ComboBox Grid.Column="1" Grid.Row="0" 
+                                      ItemsSource="{Binding StrictMethodsList}"
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Method"
+                                      SelectedValue="{Binding SelectedMethod}"/>
+
                         </Grid>
                     </TabItem.Content>
                 </TabItem>

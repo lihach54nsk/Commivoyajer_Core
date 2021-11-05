@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commivoyajer_Framework", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commivoyager.DyncamicProgramming", "Commivoyager.DyncamicProgramming\Commivoyager.DyncamicProgramming.csproj", "{B73AC429-7413-46B9-A6EE-4E78FC46E7E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComivoyagerNext", "ComivoyagerNext\ComivoyagerNext.csproj", "{770CC5A8-0F6E-4BEB-9FD1-CEF0C24556DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComivoyagerNext", "ComivoyagerNext\ComivoyagerNext.csproj", "{770CC5A8-0F6E-4BEB-9FD1-CEF0C24556DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comivoyager.StrictMethods", "Comivoyager.StrictMethods\Comivoyager.StrictMethods.csproj", "{998B2CAE-4B3C-4612-9DE7-38E4DEA12213}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{770CC5A8-0F6E-4BEB-9FD1-CEF0C24556DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{770CC5A8-0F6E-4BEB-9FD1-CEF0C24556DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{770CC5A8-0F6E-4BEB-9FD1-CEF0C24556DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{998B2CAE-4B3C-4612-9DE7-38E4DEA12213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{998B2CAE-4B3C-4612-9DE7-38E4DEA12213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{998B2CAE-4B3C-4612-9DE7-38E4DEA12213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{998B2CAE-4B3C-4612-9DE7-38E4DEA12213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

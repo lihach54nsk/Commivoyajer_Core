@@ -1,9 +1,8 @@
-﻿using System;
-using Commivoyajer_Core.Models;
+﻿using Commivoyajer_Core.Models;
 
-namespace Commivoyager.DyncamicProgramming
+namespace Comivoyager.StrictMethods.Methods
 {
-    public static class PathFinder
+    public static class DyncamicProgrammingSolver
     {
         public static Output FindTheWay(double[,] ways)
         {
@@ -20,20 +19,20 @@ namespace Commivoyager.DyncamicProgramming
 
             temp[0, 0] = 0.0;
 
-            for (var mask = 0L; mask < (1 << dotsCount); mask++)
+            for (var mask = 0L; mask < 1 << dotsCount; mask++)
             {
                 for (int i = 0; i < dotsCount; i++)
                 {
-                    if(temp[mask, i] == double.PositiveInfinity)
+                    if (temp[mask, i] == double.PositiveInfinity)
                     {
                         continue;
                     }
 
                     for (int j = 0; j < dotsCount; j++)
                     {
-                        if ((mask & (1 << j)) == 0)
+                        if ((mask & 1 << j) == 0)
                         {
-                            temp[mask ^ (1 << j), j] = Math.Min(temp[mask ^ (1 << j), j], temp[mask, i] + ways[i, j]);
+                            temp[mask ^ 1 << j, j] = Math.Min(temp[mask ^ 1 << j, j], temp[mask, i] + ways[i, j]);
                         }
                     }
                 }
@@ -46,11 +45,11 @@ namespace Commivoyager.DyncamicProgramming
             for (int i = 0; i < dotsCount; i++)
             {
                 var pathSegmentLength = temp[currentPathMask, currentCity];
-                currentPathMask ^= (1 << currentCity);
+                currentPathMask ^= 1 << currentCity;
 
                 for (int j = 0; j < dotsCount; j++)
                 {
-                    if ((currentPathMask & (1 << j)) != 0 && temp[currentPathMask, j] + ways[j, currentCity] - pathSegmentLength < 0.0001)
+                    if ((currentPathMask & 1 << j) != 0 && temp[currentPathMask, j] + ways[j, currentCity] - pathSegmentLength < 0.0001)
                     {
                         pathTrace[i] = j;
                         currentCity = j;

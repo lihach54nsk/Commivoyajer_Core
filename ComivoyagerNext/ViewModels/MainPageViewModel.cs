@@ -15,7 +15,7 @@ namespace ComivoyagerNext.ViewModels
 {
     class MainPageViewModel : INotifyPropertyChanged
     {
-        public enum SimulationMode { Random, Genetic, Burnout, Ants }
+        public enum SimulationMode { Random, Genetic, Burnout, Ants, Strict }
 
         public delegate void PathChangedEvent(object sender, PathEventInfo e);
 
@@ -42,6 +42,8 @@ namespace ComivoyagerNext.ViewModels
         public AntsViewModel AntsViewModel { get; } = new();
 
         public GeneticAlgorithmViewModel GeneticAlgorithmViewModel { get; } = new();
+
+        public StrictMethodsViewModel StrictMethodsViewModel { get; } = new();
 
         public ObservableCollection<DotModel> Dots { get; } = new();
 
@@ -98,8 +100,7 @@ namespace ComivoyagerNext.ViewModels
 
         public async Task SimulateAsync()
         {
-            var sw = new Stopwatch();
-            sw.Start();
+            var sw = Stopwatch.StartNew();
             switch (Mode)
             {
                 case SimulationMode.Random:
@@ -114,6 +115,9 @@ namespace ComivoyagerNext.ViewModels
                 case SimulationMode.Ants:
                     await SimulateAntsAsync();
                     break;
+                case SimulationMode.Strict:
+                    await SimulateStrictAsync();
+                    break;
                 default:
                     break;
             }
@@ -123,6 +127,28 @@ namespace ComivoyagerNext.ViewModels
             {
                 ExecutionTime = sw.ElapsedMilliseconds;
             });
+        }
+
+        public async Task SimulateStrictAsync()
+        {
+            var dotsSnapshot = Dots.ToArray();
+
+            var cities = Dots.Select(x => new Point { X = x.X, Y = x.Y }).ToArray();
+
+            var result = await Task.Run(() => StrictMethodsViewModel.FindTheWay(cities));
+
+            OnPathChanged?.Invoke(this, new PathEventInfo { Path = result.Sequence.Select(x => dotsSnapshot[x-1]).ToArray() });
+
+            WayLength = result.JourneyLength;
+
+            var sequenceStringBuilder = new StringBuilder();
+
+            foreach (var item in result.Sequence)
+            {
+                sequenceStringBuilder.Append($"{item} -> ");
+            }
+
+            Sequence = sequenceStringBuilder.ToString();
         }
 
         public async Task SimulateGeneticAsync()
