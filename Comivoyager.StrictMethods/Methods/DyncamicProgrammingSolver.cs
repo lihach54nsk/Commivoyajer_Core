@@ -1,4 +1,5 @@
 ﻿using Commivoyajer_Core.Models;
+using System;
 
 namespace Comivoyager.StrictMethods.Methods
 {
@@ -10,12 +11,8 @@ namespace Comivoyager.StrictMethods.Methods
             var temp = new double[1 << dotsCount, dotsCount];
 
             for (int i = 0; i < temp.GetLength(0); i++)
-            {
                 for (int j = 0; j < temp.GetLength(1); j++)
-                {
                     temp[i, j] = double.PositiveInfinity;
-                }
-            }
 
             temp[0, 0] = 0.0;
 
@@ -24,16 +21,12 @@ namespace Comivoyager.StrictMethods.Methods
                 for (int i = 0; i < dotsCount; i++)
                 {
                     if (temp[mask, i] == double.PositiveInfinity)
-                    {
                         continue;
-                    }
 
                     for (int j = 0; j < dotsCount; j++)
                     {
                         if ((mask & 1 << j) == 0)
-                        {
                             temp[mask ^ 1 << j, j] = Math.Min(temp[mask ^ 1 << j, j], temp[mask, i] + ways[i, j]);
-                        }
                     }
                 }
             }

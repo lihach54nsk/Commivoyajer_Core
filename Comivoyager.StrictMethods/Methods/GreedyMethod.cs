@@ -1,4 +1,6 @@
 ﻿using Commivoyajer_Core.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Comivoyager.StrictMethods.Methods
 {
