@@ -70,7 +70,7 @@ namespace Commivoyajer_User_Interface
                 chart.Series[0].Points.Add(x, y);
                 coords.Add(new double[] { x, y });
                 x += 5.0 * k;
-                x += 5.0 * k;
+                y += 5.0 * k;
             }
 
             for (int i = 0; i < graph.Length; i++)
@@ -82,7 +82,10 @@ namespace Commivoyajer_User_Interface
                     chart.Series[i + 1].Points.AddXY(coords[i][0], coords[i][1]);
                 }
                 else
+                {
                     chart.Series[i + 1].Points.Clear();
+                    chart.Series[i + 1].Points.AddXY(coords[i][0], coords[i][1]);
+                }
 
                 for (int j = 0; j < graph[i].node.Length; j++)
                 {
