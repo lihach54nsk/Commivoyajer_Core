@@ -27,7 +27,6 @@ namespace Commivoyajer_Framework.Methods
         public Tuple<int, int[]> ColorizeGraph(Graph[] graph, int populationSize, double mutationProbability1, double mutationProbability2, int maxGenerationCount)
         {
             maxNumberOfColors = 1;
-            var populationSize = 200;
 
             for (int i = 0; i < graph.Length; i++)
                 if (graph[i].node.Sum() > maxNumberOfColors)
@@ -62,9 +61,9 @@ namespace Commivoyajer_Framework.Methods
                     for (int i = 0; i < newPopulation.Count; i++)
                     {
                         if (gen < 200)
-                            newPopulation[i] = Mutation1(newPopulation[i], graph.Length, numberOfColors);
+                            newPopulation[i] = Mutation(newPopulation[i], graph.Length, numberOfColors, mutationProbability1);
                         else
-                            newPopulation[i] = Mutation2(newPopulation[i], graph.Length, numberOfColors);
+                            newPopulation[i] = Mutation(newPopulation[i], graph.Length, numberOfColors, mutationProbability2);
                     }
 
                     population = newPopulation;
@@ -135,22 +134,9 @@ namespace Commivoyajer_Framework.Methods
             return newPopulation;
         }
 
-        private int[] Mutation2(int[] individual, int n, int numberOfColors)
+
+        private int[] Mutation(int[] individual, int n, int numberOfColors, double probability)
         {
-            var probability = 0.2;
-            var random = new Random();
-            var check = random.NextDouble();
-
-            if (check <= probability)
-                individual[random.Next(n - 1)] = random.Next(1, numberOfColors);
-
-            return individual;
-        }
-
-
-        private int[] Mutation1(int[] individual, int n, int numberOfColors)
-        {
-            var probability = 0.4;
             var random = new Random();
             var check = random.NextDouble();
 
