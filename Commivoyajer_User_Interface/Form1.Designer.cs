@@ -29,10 +29,10 @@ namespace Commivoyajer_User_Interface
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.inputDataGridView = new System.Windows.Forms.DataGridView();
             this.XCoord = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,24 +56,24 @@ namespace Commivoyajer_User_Interface
             // 
             // chart
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart.Legends.Add(legend4);
+            chartArea5.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart.Legends.Add(legend5);
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series7.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            series7.Legend = "Legend1";
-            series7.Name = "Cities";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Color = System.Drawing.Color.Red;
-            series8.Legend = "Legend1";
-            series8.Name = "Path";
-            this.chart.Series.Add(series7);
-            this.chart.Series.Add(series8);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series9.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series9.Legend = "Legend1";
+            series9.Name = "Cities";
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series10.Color = System.Drawing.Color.Red;
+            series10.Legend = "Legend1";
+            series10.Name = "Path";
+            this.chart.Series.Add(series9);
+            this.chart.Series.Add(series10);
             this.chart.Size = new System.Drawing.Size(525, 353);
             this.chart.TabIndex = 0;
             this.chart.Text = "Chart";
@@ -176,7 +176,7 @@ namespace Commivoyajer_User_Interface
             this.mutatuionProbability1TextBox.Name = "mutatuionProbability1TextBox";
             this.mutatuionProbability1TextBox.Size = new System.Drawing.Size(100, 20);
             this.mutatuionProbability1TextBox.TabIndex = 18;
-            this.mutatuionProbability1TextBox.Text = "0.4";
+            this.mutatuionProbability1TextBox.Text = "0,4";
             // 
             // mutatuionProbability2TextBox
             // 
@@ -184,7 +184,7 @@ namespace Commivoyajer_User_Interface
             this.mutatuionProbability2TextBox.Name = "mutatuionProbability2TextBox";
             this.mutatuionProbability2TextBox.Size = new System.Drawing.Size(100, 20);
             this.mutatuionProbability2TextBox.TabIndex = 19;
-            this.mutatuionProbability2TextBox.Text = "0.2";
+            this.mutatuionProbability2TextBox.Text = "0,2";
             // 
             // graphDimensionTextBox
             // 

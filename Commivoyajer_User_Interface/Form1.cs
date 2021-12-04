@@ -183,8 +183,7 @@ namespace Commivoyajer_User_Interface
                 Convert.ToInt32(populationSizeTextBox.Text), Convert.ToDouble(mutatuionProbability1TextBox.Text),
                 Convert.ToDouble(mutatuionProbability2TextBox.Text), Convert.ToInt32(generationTextBox.Text));
             stopwatch.Stop();
-            calculationTimeTextBox.Text = stopwatch.ElapsedMilliseconds.ToString();
-            var i = 0;
+            calculationTimeTextBox.Text = stopwatch.ElapsedMilliseconds.ToString() + " ms";
         }
     }
 }
