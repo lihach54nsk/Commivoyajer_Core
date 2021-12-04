@@ -24,7 +24,7 @@ namespace Commivoyajer_Framework.Methods
         /// Colorizes the graph
         /// </summary>
         /// <param name="graph">Adjacency matrix</param>
-        public Tuple<int, int[]> ColorizeGraph(Graph[] graph, int populationSize, double mutationProbability1, double mutationProbability2, int maxGenerationCount)
+        public Tuple<int, int[], Graph[]> ColorizeGraph(Graph[] graph, int populationSize, double mutationProbability1, double mutationProbability2, int maxGenerationCount)
         {
             maxNumberOfColors = 1;
 
@@ -80,7 +80,7 @@ namespace Commivoyajer_Framework.Methods
                     }
                 }
             }
-            return new Tuple<int, int[]>(numberOfColors, fitnessIndividual);
+            return new Tuple<int, int[], Graph[]>(numberOfColors, fitnessIndividual, graph);
         }
 
         private List<int[]> RouletteWhellSelection(Graph[] graph, List<int[]> population)

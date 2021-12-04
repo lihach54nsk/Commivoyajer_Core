@@ -25,138 +25,6 @@ namespace Commivoyajer_User_Interface
             InitializeComponent();
         }
 
-        private void bruteForceButton_Click(object sender, EventArgs e)
-        {
-            chart.Series[0].Points.Clear();
-            chart.Series[1].Points.Clear();
-            var coords = new List<Input>();
-
-            for (int i = 0; i < inputDataGridView.Rows.Count - 1; i++)
-            {
-                coords.Add(new Input
-                {
-                    Id = i + 1,
-                    XCoord = Convert.ToDouble(inputDataGridView.Rows[i].Cells[0].Value),
-                    YCoord = Convert.ToDouble(inputDataGridView.Rows[i].Cells[1].Value)
-                });
-
-                chart.Series[0].Points.AddXY(Convert.ToDouble(inputDataGridView.Rows[i].Cells[0].Value),
-                    Convert.ToDouble(inputDataGridView.Rows[i].Cells[1].Value));
-            }
-
-            var input = _prepareData.PrepareData(coords);
-
-            var time = new Stopwatch();
-            time.Start();
-            var result = _bruteForceMethod.GetBruteForceMethod(input);
-            time.Stop();
-
-            result.CalculationTime = time.ElapsedMilliseconds;
-            result.JourneyLength = _prepareData.CalculateJourneyLength(input, result.Sequence);
-
-            ShowDataInUI(coords, result);
-        }
-
-        private void branchAndBoundMethodButton_Click(object sender, EventArgs e)
-        {
-            chart.Series[0].Points.Clear();
-            chart.Series[1].Points.Clear();
-            var coords = new List<Input>();
-
-            for (int i = 0; i < inputDataGridView.Rows.Count - 1; i++)
-            {
-                coords.Add(new Input
-                {
-                    Id = i + 1,
-                    XCoord = Convert.ToDouble(inputDataGridView.Rows[i].Cells[0].Value),
-                    YCoord = Convert.ToDouble(inputDataGridView.Rows[i].Cells[1].Value)
-                });
-
-                chart.Series[0].Points.AddXY(Convert.ToDouble(inputDataGridView.Rows[i].Cells[0].Value),
-                    Convert.ToDouble(inputDataGridView.Rows[i].Cells[1].Value));
-            }
-
-            var input = _prepareData.PrepareData(coords);
-            var watch = new Stopwatch();
-            watch.Start();
-            var result = _branchAndBoundMethod.Branch_and_bound(input);
-            watch.Stop();
-
-            result.CalculationTime = watch.ElapsedMilliseconds;
-
-            ShowDataInUI(coords, result);
-        }
-
-        private void dynamicProgrammingMethodButton_Click(object sender, EventArgs e)
-        {
-            chart.Series[0].Points.Clear();
-            chart.Series[1].Points.Clear();
-            var coords = new List<Input>();
-
-            for (int i = 0; i < inputDataGridView.Rows.Count - 1; i++)
-            {
-                coords.Add(new Input
-                {
-                    Id = i + 1,
-                    XCoord = Convert.ToDouble(inputDataGridView.Rows[i].Cells[0].Value),
-                    YCoord = Convert.ToDouble(inputDataGridView.Rows[i].Cells[1].Value)
-                });
-
-                chart.Series[0].Points.AddXY(Convert.ToDouble(inputDataGridView.Rows[i].Cells[0].Value),
-                    Convert.ToDouble(inputDataGridView.Rows[i].Cells[1].Value));
-            }
-
-            var input = _prepareData.PrepareData(coords);
-
-            var watch = new Stopwatch();
-            watch.Start();
-
-            var result = DyncamicProgrammingSolver.FindTheWay(input);
-
-            watch.Stop();
-
-            result.CalculationTime = watch.ElapsedMilliseconds;
-
-            for (int i = 0; i < result.Sequence.Length; i++)
-            {
-                result.Sequence[i] = result.Sequence[i] + 1;
-            }
-
-            ShowDataInUI(coords, result);
-        }
-
-        private void greedyMethodButton_Click(object sender, EventArgs e)
-        {
-            chart.Series[0].Points.Clear();
-            chart.Series[1].Points.Clear();
-            var coords = new List<Input>();
-
-            for (int i = 0; i < inputDataGridView.Rows.Count - 1; i++)
-            {
-                coords.Add(new Input
-                {
-                    Id = i + 1,
-                    XCoord = Convert.ToDouble(inputDataGridView.Rows[i].Cells[0].Value),
-                    YCoord = Convert.ToDouble(inputDataGridView.Rows[i].Cells[1].Value)
-                });
-
-                chart.Series[0].Points.AddXY(Convert.ToDouble(inputDataGridView.Rows[i].Cells[0].Value),
-                    Convert.ToDouble(inputDataGridView.Rows[i].Cells[1].Value));
-            }
-
-            var input = _prepareData.PrepareData(coords);
-
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
-            var result = _greedyMethod.GetGreedyMethod(input);
-            stopWatch.Stop();
-
-            result.CalculationTime = stopWatch.ElapsedMilliseconds;
-            result.JourneyLength = _prepareData.CalculateJourneyLength(input, result.Sequence);
-
-            ShowDataInUI(coords, result);
-        }
-
         private void ShowDataInUI(List<Input> coords, Output output)
         {
             var sequenceString = "";
@@ -177,13 +45,54 @@ namespace Commivoyajer_User_Interface
         private void colorizeGraphButton_Click(object sender, EventArgs e)
         {
             var stopwatch = new Stopwatch();
+
             stopwatch.Start();
             var result = new GeneticAlgorithmGraphColoring()
                 .ColorizeGraph(GeneticAlgorithmGraphColoring.GenerateGraph(Convert.ToInt32(graphDimensionTextBox.Text)),
                 Convert.ToInt32(populationSizeTextBox.Text), Convert.ToDouble(mutatuionProbability1TextBox.Text),
                 Convert.ToDouble(mutatuionProbability2TextBox.Text), Convert.ToInt32(generationTextBox.Text));
             stopwatch.Stop();
+
+            ShowGraphInUI(result.Item1, result.Item2, result.Item3);
             calculationTimeTextBox.Text = stopwatch.ElapsedMilliseconds.ToString() + " ms";
+            colorsCountTextBox.Text = result.Item1.ToString();
+        }
+
+        private void ShowGraphInUI(int numberOfColors, int[] colorSequence, Graph[] graph)
+        {
+            chart.Series[0].Points.Clear();
+            var x = 0.0;
+            var y = 0.0;
+            var coords = new List<double[]>();
+            for (int i = 0; i < graph.Length; i++)
+            {
+                double k = (double)i / (double)graph.Length < 0.5 ? 1 : -1;
+                chart.Series[0].Points.Add(x, y);
+                coords.Add(new double[] { x, y });
+                x += 5.0 * k;
+                x += 5.0 * k;
+            }
+
+            for (int i = 0; i < graph.Length; i++)
+            {
+                if (chart.Series.IsUniqueName($"Edges of {i} node"))
+                {
+                    chart.Series.Add($"Edges of {i} node");
+                    chart.Series[i + 1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                    chart.Series[i + 1].Points.AddXY(coords[i][0], coords[i][1]);
+                }
+                else
+                    chart.Series[i + 1].Points.Clear();
+
+                for (int j = 0; j < graph[i].node.Length; j++)
+                {
+                    if (graph[i].node[j] == 1)
+                    {
+                        chart.Series[i + 1].Points.AddXY(coords[j][0], coords[j][1]);
+                        chart.Series[i + 1].Points.AddXY(coords[i][0], coords[i][1]);
+                    }
+                }
+            }
         }
     }
 }
