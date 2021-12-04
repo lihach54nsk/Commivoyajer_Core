@@ -29,48 +29,51 @@ namespace Commivoyajer_User_Interface
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.inputDataGridView = new System.Windows.Forms.DataGridView();
             this.XCoord = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.YCoord = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bruteForceButton = new System.Windows.Forms.Button();
-            this.branchAndBoundMethodButton = new System.Windows.Forms.Button();
-            this.dynamicProgrammingMethodButton = new System.Windows.Forms.Button();
-            this.greedyMethodButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.calculationTimeTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.journeyLengthTextBox = new System.Windows.Forms.TextBox();
-            this.sequenceTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.colorizeGraphButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.generationTextBox = new System.Windows.Forms.TextBox();
+            this.mutatuionProbability1TextBox = new System.Windows.Forms.TextBox();
+            this.mutatuionProbability2TextBox = new System.Windows.Forms.TextBox();
+            this.graphDimensionTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.populationSizeTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // chart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart.Legends.Add(legend4);
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            series1.Legend = "Legend1";
-            series1.Name = "Cities";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.Name = "Path";
-            this.chart.Series.Add(series1);
-            this.chart.Series.Add(series2);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series7.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series7.Legend = "Legend1";
+            series7.Name = "Cities";
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series8.Color = System.Drawing.Color.Red;
+            series8.Legend = "Legend1";
+            series8.Name = "Path";
+            this.chart.Series.Add(series7);
+            this.chart.Series.Add(series8);
             this.chart.Size = new System.Drawing.Size(525, 353);
             this.chart.TabIndex = 0;
             this.chart.Text = "Chart";
@@ -96,46 +99,6 @@ namespace Commivoyajer_User_Interface
             this.YCoord.HeaderText = "Y";
             this.YCoord.Name = "YCoord";
             // 
-            // bruteForceButton
-            // 
-            this.bruteForceButton.Location = new System.Drawing.Point(544, 183);
-            this.bruteForceButton.Name = "bruteForceButton";
-            this.bruteForceButton.Size = new System.Drawing.Size(244, 26);
-            this.bruteForceButton.TabIndex = 2;
-            this.bruteForceButton.Text = "Полный перебор";
-            this.bruteForceButton.UseVisualStyleBackColor = true;
-            this.bruteForceButton.Click += new System.EventHandler(this.bruteForceButton_Click);
-            // 
-            // branchAndBoundMethodButton
-            // 
-            this.branchAndBoundMethodButton.Location = new System.Drawing.Point(543, 215);
-            this.branchAndBoundMethodButton.Name = "branchAndBoundMethodButton";
-            this.branchAndBoundMethodButton.Size = new System.Drawing.Size(245, 26);
-            this.branchAndBoundMethodButton.TabIndex = 3;
-            this.branchAndBoundMethodButton.Text = "Метод ветвей и границ";
-            this.branchAndBoundMethodButton.UseVisualStyleBackColor = true;
-            this.branchAndBoundMethodButton.Click += new System.EventHandler(this.branchAndBoundMethodButton_Click);
-            // 
-            // dynamicProgrammingMethodButton
-            // 
-            this.dynamicProgrammingMethodButton.Location = new System.Drawing.Point(543, 247);
-            this.dynamicProgrammingMethodButton.Name = "dynamicProgrammingMethodButton";
-            this.dynamicProgrammingMethodButton.Size = new System.Drawing.Size(245, 26);
-            this.dynamicProgrammingMethodButton.TabIndex = 4;
-            this.dynamicProgrammingMethodButton.Text = "Динамическое программирование";
-            this.dynamicProgrammingMethodButton.UseVisualStyleBackColor = true;
-            this.dynamicProgrammingMethodButton.Click += new System.EventHandler(this.dynamicProgrammingMethodButton_Click);
-            // 
-            // greedyMethodButton
-            // 
-            this.greedyMethodButton.Location = new System.Drawing.Point(543, 279);
-            this.greedyMethodButton.Name = "greedyMethodButton";
-            this.greedyMethodButton.Size = new System.Drawing.Size(245, 26);
-            this.greedyMethodButton.TabIndex = 5;
-            this.greedyMethodButton.Text = "Жадный алгоритм";
-            this.greedyMethodButton.UseVisualStyleBackColor = true;
-            this.greedyMethodButton.Click += new System.EventHandler(this.greedyMethodButton_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -153,55 +116,119 @@ namespace Commivoyajer_User_Interface
             this.calculationTimeTextBox.Size = new System.Drawing.Size(100, 20);
             this.calculationTimeTextBox.TabIndex = 7;
             // 
-            // label2
+            // colorizeGraphButton
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 405);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Длина пути: ";
+            this.colorizeGraphButton.Location = new System.Drawing.Point(543, 318);
+            this.colorizeGraphButton.Name = "colorizeGraphButton";
+            this.colorizeGraphButton.Size = new System.Drawing.Size(245, 26);
+            this.colorizeGraphButton.TabIndex = 12;
+            this.colorizeGraphButton.Text = "Раскрасить граф";
+            this.colorizeGraphButton.UseVisualStyleBackColor = true;
+            this.colorizeGraphButton.Click += new System.EventHandler(this.colorizeGraphButton_Click);
             // 
-            // journeyLengthTextBox
+            // label4
             // 
-            this.journeyLengthTextBox.Location = new System.Drawing.Point(144, 402);
-            this.journeyLengthTextBox.Name = "journeyLengthTextBox";
-            this.journeyLengthTextBox.ReadOnly = true;
-            this.journeyLengthTextBox.Size = new System.Drawing.Size(100, 20);
-            this.journeyLengthTextBox.TabIndex = 9;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(543, 189);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(129, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Количество поколений: ";
             // 
-            // sequenceTextBox
+            // label5
             // 
-            this.sequenceTextBox.Location = new System.Drawing.Point(144, 428);
-            this.sequenceTextBox.Name = "sequenceTextBox";
-            this.sequenceTextBox.ReadOnly = true;
-            this.sequenceTextBox.Size = new System.Drawing.Size(100, 20);
-            this.sequenceTextBox.TabIndex = 10;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(543, 215);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(132, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Вероятность мутации 1: ";
             // 
-            // label3
+            // label6
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 431);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(121, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Последовательность: ";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(543, 241);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(132, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Вероятность мутации 2: ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(543, 267);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(115, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Размерность графа: ";
+            // 
+            // generationTextBox
+            // 
+            this.generationTextBox.Location = new System.Drawing.Point(678, 186);
+            this.generationTextBox.Name = "generationTextBox";
+            this.generationTextBox.Size = new System.Drawing.Size(100, 20);
+            this.generationTextBox.TabIndex = 17;
+            this.generationTextBox.Text = "10000";
+            // 
+            // mutatuionProbability1TextBox
+            // 
+            this.mutatuionProbability1TextBox.Location = new System.Drawing.Point(678, 212);
+            this.mutatuionProbability1TextBox.Name = "mutatuionProbability1TextBox";
+            this.mutatuionProbability1TextBox.Size = new System.Drawing.Size(100, 20);
+            this.mutatuionProbability1TextBox.TabIndex = 18;
+            this.mutatuionProbability1TextBox.Text = "0.4";
+            // 
+            // mutatuionProbability2TextBox
+            // 
+            this.mutatuionProbability2TextBox.Location = new System.Drawing.Point(678, 238);
+            this.mutatuionProbability2TextBox.Name = "mutatuionProbability2TextBox";
+            this.mutatuionProbability2TextBox.Size = new System.Drawing.Size(100, 20);
+            this.mutatuionProbability2TextBox.TabIndex = 19;
+            this.mutatuionProbability2TextBox.Text = "0.2";
+            // 
+            // graphDimensionTextBox
+            // 
+            this.graphDimensionTextBox.Location = new System.Drawing.Point(678, 264);
+            this.graphDimensionTextBox.Name = "graphDimensionTextBox";
+            this.graphDimensionTextBox.Size = new System.Drawing.Size(100, 20);
+            this.graphDimensionTextBox.TabIndex = 20;
+            this.graphDimensionTextBox.Text = "20";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(543, 295);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(108, 13);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "Размер популяции: ";
+            // 
+            // populationSizeTextBox
+            // 
+            this.populationSizeTextBox.Location = new System.Drawing.Point(678, 292);
+            this.populationSizeTextBox.Name = "populationSizeTextBox";
+            this.populationSizeTextBox.Size = new System.Drawing.Size(100, 20);
+            this.populationSizeTextBox.TabIndex = 22;
+            this.populationSizeTextBox.Text = "200";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 459);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.sequenceTextBox);
-            this.Controls.Add(this.journeyLengthTextBox);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(800, 401);
+            this.Controls.Add(this.populationSizeTextBox);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.graphDimensionTextBox);
+            this.Controls.Add(this.mutatuionProbability2TextBox);
+            this.Controls.Add(this.mutatuionProbability1TextBox);
+            this.Controls.Add(this.generationTextBox);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.colorizeGraphButton);
             this.Controls.Add(this.calculationTimeTextBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.greedyMethodButton);
-            this.Controls.Add(this.dynamicProgrammingMethodButton);
-            this.Controls.Add(this.branchAndBoundMethodButton);
-            this.Controls.Add(this.bruteForceButton);
             this.Controls.Add(this.inputDataGridView);
             this.Controls.Add(this.chart);
             this.Name = "Form1";
@@ -219,16 +246,19 @@ namespace Commivoyajer_User_Interface
         private System.Windows.Forms.DataGridView inputDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn XCoord;
         private System.Windows.Forms.DataGridViewTextBoxColumn YCoord;
-        private System.Windows.Forms.Button bruteForceButton;
-        private System.Windows.Forms.Button branchAndBoundMethodButton;
-        private System.Windows.Forms.Button dynamicProgrammingMethodButton;
-        private System.Windows.Forms.Button greedyMethodButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox calculationTimeTextBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox journeyLengthTextBox;
-        private System.Windows.Forms.TextBox sequenceTextBox;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button colorizeGraphButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox generationTextBox;
+        private System.Windows.Forms.TextBox mutatuionProbability1TextBox;
+        private System.Windows.Forms.TextBox mutatuionProbability2TextBox;
+        private System.Windows.Forms.TextBox graphDimensionTextBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox populationSizeTextBox;
     }
 }
 

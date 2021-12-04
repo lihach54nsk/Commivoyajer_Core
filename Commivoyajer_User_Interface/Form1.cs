@@ -170,8 +170,21 @@ namespace Commivoyajer_User_Interface
             chart.Series[1].Points.AddXY(firstCity.XCoord, firstCity.YCoord);
 
             calculationTimeTextBox.Text = output.CalculationTime.ToString();
-            journeyLengthTextBox.Text = Math.Round(output.JourneyLength, 2).ToString();
-            sequenceTextBox.Text = sequenceString + output.Sequence[0].ToString();
+            //journeyLengthTextBox.Text = Math.Round(output.JourneyLength, 2).ToString();
+            //sequenceTextBox.Text = sequenceString + output.Sequence[0].ToString();
+        }
+
+        private void colorizeGraphButton_Click(object sender, EventArgs e)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var result = new GeneticAlgorithmGraphColoring()
+                .ColorizeGraph(GeneticAlgorithmGraphColoring.GenerateGraph(Convert.ToInt32(graphDimensionTextBox.Text)),
+                Convert.ToInt32(populationSizeTextBox.Text), Convert.ToDouble(mutatuionProbability1TextBox.Text),
+                Convert.ToDouble(mutatuionProbability2TextBox.Text), Convert.ToInt32(generationTextBox.Text));
+            stopwatch.Stop();
+            calculationTimeTextBox.Text = stopwatch.ElapsedMilliseconds.ToString();
+            var i = 0;
         }
     }
 }
