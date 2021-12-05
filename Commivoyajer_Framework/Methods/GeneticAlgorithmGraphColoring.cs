@@ -83,6 +83,12 @@ namespace Commivoyajer_Framework.Methods
             return new Tuple<int, int[], Graph[]>(numberOfColors, fitnessIndividual, graph);
         }
 
+        /// <summary>
+        /// Selection with random
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="population"></param>
+        /// <returns></returns>
         private List<int[]> RouletteWhellSelection(Graph[] graph, List<int[]> population)
         {
             var newPopulation = new List<int[]>();
@@ -93,7 +99,8 @@ namespace Commivoyajer_Framework.Methods
 
             var cumulativeFitness = new List<double>();
             var cumulativeFitnessSum = 0.0;
-            for(int i = 0; i < population.Count; i++)
+
+            for (int i = 0; i < population.Count; i++)
             {
                 cumulativeFitnessSum += 1.0 / (1.0 + Fitness(graph, population[i])) / totalFitness;
                 cumulativeFitness.Add(cumulativeFitnessSum);
@@ -116,6 +123,12 @@ namespace Commivoyajer_Framework.Methods
             return newPopulation;
         }
 
+        /// <summary>
+        /// Selection without random
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="population"></param>
+        /// <returns></returns>
         private List<int[]> TournamentSelection(Graph[] graph, List<int[]> population)
         {
             var newPopulation = new List<int[]>();

@@ -65,14 +65,14 @@ namespace Commivoyajer_User_Interface
             series1.Legend = "Legend1";
             series1.Name = "Nodes";
             this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(525, 353);
+            this.chart.Size = new System.Drawing.Size(818, 507);
             this.chart.TabIndex = 0;
             this.chart.Text = "Chart";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(546, 180);
+            this.label1.Location = new System.Drawing.Point(839, 180);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(126, 13);
             this.label1.TabIndex = 6;
@@ -80,7 +80,7 @@ namespace Commivoyajer_User_Interface
             // 
             // calculationTimeTextBox
             // 
-            this.calculationTimeTextBox.Location = new System.Drawing.Point(678, 177);
+            this.calculationTimeTextBox.Location = new System.Drawing.Point(971, 177);
             this.calculationTimeTextBox.Name = "calculationTimeTextBox";
             this.calculationTimeTextBox.ReadOnly = true;
             this.calculationTimeTextBox.Size = new System.Drawing.Size(100, 20);
@@ -88,7 +88,7 @@ namespace Commivoyajer_User_Interface
             // 
             // colorizeGraphButton
             // 
-            this.colorizeGraphButton.Location = new System.Drawing.Point(543, 141);
+            this.colorizeGraphButton.Location = new System.Drawing.Point(836, 141);
             this.colorizeGraphButton.Name = "colorizeGraphButton";
             this.colorizeGraphButton.Size = new System.Drawing.Size(245, 26);
             this.colorizeGraphButton.TabIndex = 12;
@@ -99,7 +99,7 @@ namespace Commivoyajer_User_Interface
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(543, 12);
+            this.label4.Location = new System.Drawing.Point(836, 12);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(129, 13);
             this.label4.TabIndex = 13;
@@ -108,7 +108,7 @@ namespace Commivoyajer_User_Interface
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(543, 38);
+            this.label5.Location = new System.Drawing.Point(836, 38);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(132, 13);
             this.label5.TabIndex = 14;
@@ -117,7 +117,7 @@ namespace Commivoyajer_User_Interface
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(543, 64);
+            this.label6.Location = new System.Drawing.Point(836, 64);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(132, 13);
             this.label6.TabIndex = 15;
@@ -126,7 +126,7 @@ namespace Commivoyajer_User_Interface
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(543, 90);
+            this.label7.Location = new System.Drawing.Point(836, 90);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(115, 13);
             this.label7.TabIndex = 16;
@@ -134,7 +134,7 @@ namespace Commivoyajer_User_Interface
             // 
             // generationTextBox
             // 
-            this.generationTextBox.Location = new System.Drawing.Point(678, 9);
+            this.generationTextBox.Location = new System.Drawing.Point(971, 9);
             this.generationTextBox.Name = "generationTextBox";
             this.generationTextBox.Size = new System.Drawing.Size(100, 20);
             this.generationTextBox.TabIndex = 17;
@@ -142,7 +142,7 @@ namespace Commivoyajer_User_Interface
             // 
             // mutatuionProbability1TextBox
             // 
-            this.mutatuionProbability1TextBox.Location = new System.Drawing.Point(678, 35);
+            this.mutatuionProbability1TextBox.Location = new System.Drawing.Point(971, 35);
             this.mutatuionProbability1TextBox.Name = "mutatuionProbability1TextBox";
             this.mutatuionProbability1TextBox.Size = new System.Drawing.Size(100, 20);
             this.mutatuionProbability1TextBox.TabIndex = 18;
@@ -150,7 +150,7 @@ namespace Commivoyajer_User_Interface
             // 
             // mutatuionProbability2TextBox
             // 
-            this.mutatuionProbability2TextBox.Location = new System.Drawing.Point(678, 61);
+            this.mutatuionProbability2TextBox.Location = new System.Drawing.Point(971, 61);
             this.mutatuionProbability2TextBox.Name = "mutatuionProbability2TextBox";
             this.mutatuionProbability2TextBox.Size = new System.Drawing.Size(100, 20);
             this.mutatuionProbability2TextBox.TabIndex = 19;
@@ -158,7 +158,7 @@ namespace Commivoyajer_User_Interface
             // 
             // graphDimensionTextBox
             // 
-            this.graphDimensionTextBox.Location = new System.Drawing.Point(678, 87);
+            this.graphDimensionTextBox.Location = new System.Drawing.Point(971, 87);
             this.graphDimensionTextBox.Name = "graphDimensionTextBox";
             this.graphDimensionTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphDimensionTextBox.TabIndex = 20;
@@ -167,7 +167,7 @@ namespace Commivoyajer_User_Interface
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(543, 118);
+            this.label8.Location = new System.Drawing.Point(836, 118);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(108, 13);
             this.label8.TabIndex = 21;
@@ -175,7 +175,7 @@ namespace Commivoyajer_User_Interface
             // 
             // populationSizeTextBox
             // 
-            this.populationSizeTextBox.Location = new System.Drawing.Point(678, 115);
+            this.populationSizeTextBox.Location = new System.Drawing.Point(971, 115);
             this.populationSizeTextBox.Name = "populationSizeTextBox";
             this.populationSizeTextBox.Size = new System.Drawing.Size(100, 20);
             this.populationSizeTextBox.TabIndex = 22;
@@ -184,7 +184,7 @@ namespace Commivoyajer_User_Interface
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(546, 206);
+            this.label2.Location = new System.Drawing.Point(839, 206);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(110, 13);
             this.label2.TabIndex = 23;
@@ -192,7 +192,7 @@ namespace Commivoyajer_User_Interface
             // 
             // colorsCountTextBox
             // 
-            this.colorsCountTextBox.Location = new System.Drawing.Point(678, 203);
+            this.colorsCountTextBox.Location = new System.Drawing.Point(971, 203);
             this.colorsCountTextBox.Name = "colorsCountTextBox";
             this.colorsCountTextBox.ReadOnly = true;
             this.colorsCountTextBox.Size = new System.Drawing.Size(100, 20);
@@ -202,7 +202,7 @@ namespace Commivoyajer_User_Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 401);
+            this.ClientSize = new System.Drawing.Size(1087, 527);
             this.Controls.Add(this.colorsCountTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.populationSizeTextBox);

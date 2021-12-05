@@ -60,6 +60,9 @@ namespace Commivoyajer_User_Interface
 
         private void ShowGraphInUI(int numberOfColors, int[] colorSequence, Graph[] graph)
         {
+            chart.Series.Clear();
+            chart.Series.Add("Nodes");
+            chart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             chart.Series[0].Points.Clear();
             var x = 0.0;
             var y = 0.0;
@@ -67,9 +70,9 @@ namespace Commivoyajer_User_Interface
             for (int i = 0; i < graph.Length; i++)
             {
                 double k = (double)i / (double)graph.Length < 0.5 ? 1 : -1;
-                chart.Series[0].Points.Add(x, y);
+                chart.Series[0].Points.AddXY(x, y);
                 coords.Add(new double[] { x, y });
-                x += 5.0 * k;
+                x += 5.0;
                 y += 5.0 * k;
             }
 
