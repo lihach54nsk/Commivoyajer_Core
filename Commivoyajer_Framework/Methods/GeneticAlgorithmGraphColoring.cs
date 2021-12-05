@@ -24,7 +24,8 @@ namespace Commivoyajer_Framework.Methods
         /// Colorizes the graph
         /// </summary>
         /// <param name="graph">Adjacency matrix</param>
-        public Tuple<int, int[], Graph[]> ColorizeGraph(Graph[] graph, int populationSize, double mutationProbability1, double mutationProbability2, int maxGenerationCount)
+        public Tuple<int, int[], Graph[]> ColorizeGraph(Graph[] graph, int populationSize, 
+            double mutationProbability1, double mutationProbability2, int maxGenerationCount)
         {
             maxNumberOfColors = 1;
 
@@ -60,10 +61,9 @@ namespace Commivoyajer_Framework.Methods
 
                     for (int i = 0; i < newPopulation.Count; i++)
                     {
-                        if (gen < 200)
-                            newPopulation[i] = Mutation(newPopulation[i], graph.Length, numberOfColors, mutationProbability1);
-                        else
-                            newPopulation[i] = Mutation(newPopulation[i], graph.Length, numberOfColors, mutationProbability2);
+                        newPopulation[i] = gen < 200
+                            ? Mutation(newPopulation[i], graph.Length, numberOfColors, mutationProbability1)
+                            : Mutation(newPopulation[i], graph.Length, numberOfColors, mutationProbability2);
                     }
 
                     population = newPopulation;
